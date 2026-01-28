@@ -18,44 +18,55 @@ const NAV_ITEMS = [
   { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
+// All sections observed by the scroll spy (hero + nav sections)
+const SECTION_IDS = ['home', ...NAV_ITEMS.map((item) => item.id)]
+
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const shouldReduceMotion = useReducedMotion()
 
-  // Track scroll position for header background and hero detection
+  // Track scroll position for header background only
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
-
-      // Clear active section when user is in the hero area
-      if (window.scrollY < window.innerHeight * 0.5) {
-        setActiveSection('')
-      }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Intersection Observer for active section detection
+  // Scroll spy: IntersectionObserver drives active section + URL hash
   useEffect(() => {
-    const sections = NAV_ITEMS.map(item => document.getElementById(item.id)).filter(Boolean)
+    const sections = SECTION_IDS
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Only update if user has scrolled past hero
-        if (window.scrollY < window.innerHeight * 0.5) return
-
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            const id = entry.target.id
+
+            if (id === 'home') {
+              setActiveSection('')
+              if (window.location.hash) {
+                history.replaceState(null, '', window.location.pathname)
+              }
+            } else {
+              setActiveSection(id)
+              const newHash = `#${id}`
+              if (window.location.hash !== newHash) {
+                history.replaceState(null, '', newHash)
+              }
+            }
+            break
           }
-        })
+        }
       },
       {
-        rootMargin: '-20% 0px -70% 0px',
+        rootMargin: '-50% 0px -50% 0px',
         threshold: 0,
       }
     )
@@ -64,11 +75,7 @@ function Header() {
       if (section) observer.observe(section)
     })
 
-    return () => {
-      sections.forEach((section) => {
-        if (section) observer.unobserve(section)
-      })
-    }
+    return () => observer.disconnect()
   }, [])
 
   // Prevent scroll when mobile menu is open
@@ -83,8 +90,15 @@ function Header() {
     }
   }, [isMobileMenuOpen])
 
-  const handleLinkClick = () => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
     setIsMobileMenuOpen(false)
+
+    const id = href.replace('#', '')
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (
@@ -118,10 +132,10 @@ function Header() {
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id
               return (
-                <Link
+                <a
                   key={item.href}
                   href={item.href}
-                  onClick={handleLinkClick}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={clsx(
                     'relative px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200',
                     isScrolled
@@ -150,7 +164,7 @@ function Header() {
                       }}
                     />
                   )}
-                </Link>
+                </a>
               )
             })}
           </div>
@@ -239,9 +253,9 @@ function Header() {
                     const isActive = activeSection === item.id
                     return (
                       <li key={item.href}>
-                        <Link
+                        <a
                           href={item.href}
-                          onClick={handleLinkClick}
+                          onClick={(e) => handleNavClick(e, item.href)}
                           className={clsx(
                             'flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl transition-colors duration-200',
                             isActive
@@ -254,7 +268,7 @@ function Header() {
                           {isActive && (
                             <span className="w-2 h-2 rounded-full bg-secondary" aria-hidden="true" />
                           )}
-                        </Link>
+                        </a>
                       </li>
                     )
                   })}
@@ -272,7 +286,7 @@ function Header() {
                       <div>{SITE_CONFIG.phone}</div>
                     </div>
                   </a>
-                  <Button href="#contact" variant="secondary" className="w-full justify-center py-3" onClick={handleLinkClick}>
+                  <Button href="#contact" variant="secondary" className="w-full justify-center py-3" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#contact')}>
                     Get Free Quote
                   </Button>
                 </div>

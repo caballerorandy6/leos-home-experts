@@ -66,7 +66,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section id="home" className="relative min-h-screen flex items-center">
       {/* Video Background */}
       <div className="absolute inset-0">
         {/* Fallback Image */}
@@ -91,7 +91,7 @@ export function HeroSection() {
         )}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-linear-to-br from-primary/95 via-primary/85 to-primary/70" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/70 via-primary/50 to-primary/30" />
       </div>
 
       <Container className="relative z-10 py-24 pt-32 lg:py-32 lg:pt-40">
@@ -99,17 +99,23 @@ export function HeroSection() {
           {/* Left: Content */}
           <FadeIn>
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm mb-8 border border-white/10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md rounded-full text-white text-sm mb-8 border border-white/20">
               <span className="w-2 h-2 bg-secondary rounded-full animate-pulse" aria-hidden="true" />
               Serving Houston &amp; 150 Miles Around
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance text-white leading-[1.1]">
+            <h1
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance text-white leading-[1.1]"
+              style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
+            >
               Transform Your Home{' '}
-              <span className="text-secondary">Inside &amp; Out</span>
+              <span className="text-secondary drop-shadow-lg">Inside &amp; Out</span>
             </h1>
 
-            <p className="mt-6 text-lg sm:text-xl text-white/85 max-w-xl leading-relaxed">
+            <p
+              className="mt-6 text-lg sm:text-xl text-white max-w-xl leading-relaxed"
+              style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}
+            >
               Expert interior remodeling, patio renovations, custom shades, curtains,
               and awnings. Quality craftsmanship and honest pricing.
             </p>
@@ -125,7 +131,7 @@ export function HeroSection() {
                   <div className="text-2xl sm:text-3xl font-bold text-secondary tabular-nums">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-white/70">{stat.label}</div>
+                  <div className="text-sm text-white/90" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -141,7 +147,7 @@ export function HeroSection() {
               </a>
               <a
                 href={`tel:${SITE_CONFIG.phone}`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-lg rounded-full border-2 border-white/30 backdrop-blur-sm transition-colors duration-200"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/15 hover:bg-white/25 text-white font-semibold text-lg rounded-full border-2 border-white/30 backdrop-blur-md transition-colors duration-200"
               >
                 <Phone className="h-5 w-5" aria-hidden="true" />
                 Call Now
@@ -151,7 +157,7 @@ export function HeroSection() {
             {/* Features List - Desktop */}
             <ul className="mt-10 hidden lg:flex flex-wrap gap-x-6 gap-y-2">
               {['Licensed & Insured', 'Free Estimates', 'Quality Materials'].map((feature) => (
-                <li key={feature} className="flex items-center gap-2 text-white/80 text-sm">
+                <li key={feature} className="flex items-center gap-2 text-white text-sm drop-shadow-md">
                   <CheckCircle className="h-4 w-4 text-secondary shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
@@ -161,7 +167,7 @@ export function HeroSection() {
 
           {/* Right: Quick Contact Form */}
           <FadeIn className="hidden lg:block">
-            <div className="bg-white rounded-3xl p-8 shadow-2xl">
+            <div className="bg-white/90 backdrop-blur-md rounded-3xl p-8 shadow-2xl">
               {isSubmitted ? (
                 <div className="text-center py-8" role="status" aria-live="polite">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -291,12 +297,6 @@ export function HeroSection() {
         </div>
       </Container>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1">
-          <div className="w-1.5 h-3 bg-white/50 rounded-full animate-bounce" />
-        </div>
-      </div>
     </section>
   )
 }

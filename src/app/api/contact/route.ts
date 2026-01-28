@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     const { name, email, phone, service, message } = result.data
 
     const { data, error } = await resend.emails.send({
-      from: "Leo's Home Experts <onboarding@resend.dev>",
+      from: "Leo's Home Experts <no-reply@ac-remodelingservice.com>",
       to: RECIPIENT_EMAILS,
       replyTo: email,
       subject: `New Quote Request: ${service}`,
