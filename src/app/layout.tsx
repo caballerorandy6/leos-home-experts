@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   description:
     "Expert interior remodeling, patio renovations, shades, curtains, and awnings in Houston, TX. Licensed, insured, and trusted by homeowners. Get a free quote today!",
   metadataBase: new URL(SITE_CONFIG.url),
+  other: {
+    "theme-color": "#ffffff",
+  },
   keywords: [
     "interior remodeling Houston",
     "patio remodeling Houston TX",

@@ -28,7 +28,7 @@ export function StatListItem({
   return (
     <Border as={FadeIn} position="left" className="flex flex-col-reverse pl-8" invert={invert}>
       <dt className={`mt-2 text-base ${invert ? 'text-neutral-300' : 'text-neutral-600'}`}>{label}</dt>
-      <dd className={`font-display text-3xl font-semibold sm:text-4xl ${invert ? 'text-white' : 'text-primary'}`}>
+      <dd className={`font-display text-3xl font-semibold tabular-nums sm:text-4xl ${invert ? 'text-white' : 'text-primary'}`}>
         {value}
       </dd>
     </Border>

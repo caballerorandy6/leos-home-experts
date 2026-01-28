@@ -28,7 +28,7 @@ function Hero() {
   return (
     <Container className="mt-24 sm:mt-32 md:mt-56">
       <FadeIn className="max-w-3xl">
-        <h1 className="font-display text-5xl font-medium tracking-tight text-balance text-primary sm:text-7xl">
+        <h1 className="font-display text-5xl font-medium tracking-tight text-balance text-pretty text-primary sm:text-7xl">
           Transform Your Home Inside &amp; Out
         </h1>
         <p className="mt-6 text-xl text-neutral-600">
@@ -41,7 +41,7 @@ function Hero() {
             Get Free Quote
           </Button>
           <Button href={`tel:${SITE_CONFIG.phone}`}>
-            <Phone className="mr-2 h-4 w-4" />
+            <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
             Call Now
           </Button>
         </div>
@@ -97,12 +97,12 @@ function Services() {
             const Icon = serviceIcons[service.id] || HomeIcon
             return (
               <FadeIn key={service.id} className="flex">
-                <article className="relative flex w-full flex-col rounded-3xl p-6 ring-1 ring-primary/5 transition hover:bg-neutral-50 sm:p-8">
+                <article className="relative flex w-full flex-col rounded-3xl p-6 ring-1 ring-primary/5 transition-colors duration-200 hover:bg-neutral-50 sm:p-8">
                   <div className="flex items-center gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                      <Icon className="h-6 w-6 text-primary" />
+                      <Icon className="h-6 w-6 text-primary" aria-hidden="true" />
                     </div>
-                    <h3 className="font-display text-xl font-semibold text-primary">
+                    <h3 className="font-display text-xl font-semibold text-primary text-pretty">
                       {service.title}
                     </h3>
                   </div>
@@ -197,20 +197,20 @@ function Testimonials() {
           {TESTIMONIALS.map((testimonial) => (
             <FadeIn key={testimonial.id}>
               <figure className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-primary/5">
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-4" role="img" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
+                    <Star key={i} className="h-5 w-5 fill-secondary text-secondary" aria-hidden="true" />
                   ))}
                 </div>
                 <blockquote className="text-neutral-600">
                   <p>&quot;{testimonial.text}&quot;</p>
                 </blockquote>
                 <figcaption className="mt-6 flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white font-semibold">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white font-semibold" aria-hidden="true">
                     {testimonial.name.charAt(0)}
                   </div>
                   <div>
-                    <div className="font-semibold text-primary">{testimonial.name}</div>
+                    <cite className="font-semibold text-primary not-italic">{testimonial.name}</cite>
                     <div className="text-sm text-neutral-500">{testimonial.location}</div>
                   </div>
                 </figcaption>
@@ -246,27 +246,27 @@ function ServiceAreas() {
                 <h3 className="font-display text-lg font-semibold text-white mb-4">
                   Houston Metro Area
                 </h3>
-                <div className="grid grid-cols-2 gap-2">
+                <ul className="grid grid-cols-2 gap-2" role="list">
                   {SERVICE_AREAS.houston.slice(0, 8).map((city) => (
-                    <div key={city} className="flex items-center gap-2 text-neutral-300 text-sm">
-                      <CheckCircle className="h-4 w-4 text-secondary" />
+                    <li key={city} className="flex items-center gap-2 text-neutral-300 text-sm">
+                      <CheckCircle className="h-4 w-4 text-secondary shrink-0" aria-hidden="true" />
                       {city}
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
               <div>
                 <h3 className="font-display text-lg font-semibold text-white mb-4">
                   Extended Service Area (150 mi)
                 </h3>
-                <div className="grid grid-cols-2 gap-2">
+                <ul className="grid grid-cols-2 gap-2" role="list">
                   {SERVICE_AREAS.extended.slice(0, 8).map((city) => (
-                    <div key={city} className="flex items-center gap-2 text-neutral-300 text-sm">
-                      <CheckCircle className="h-4 w-4 text-secondary" />
+                    <li key={city} className="flex items-center gap-2 text-neutral-300 text-sm">
+                      <CheckCircle className="h-4 w-4 text-secondary shrink-0" aria-hidden="true" />
                       {city}
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
                 <p className="mt-4 text-sm text-neutral-400">
                   * Curtains, Shades &amp; Awnings services available
                 </p>
@@ -293,18 +293,18 @@ export default function Home() {
       <LocalBusinessJsonLd />
       <ServicesJsonLd />
       <WebsiteJsonLd />
-      <section id="services">
-        <Hero />
-      </section>
+      <Hero />
       <Stats />
-      <Services />
-      <section id="about">
+      <section id="services" className="scroll-mt-24">
+        <Services />
+      </section>
+      <section id="about" className="scroll-mt-24">
         <WhyChooseUs />
       </section>
-      <section id="testimonials">
+      <section id="testimonials" className="scroll-mt-24">
         <Testimonials />
       </section>
-      <section id="areas">
+      <section id="areas" className="scroll-mt-24">
         <ServiceAreas />
       </section>
       <Contact />

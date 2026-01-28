@@ -70,12 +70,12 @@ export function ContactForm() {
                 href={`tel:${SITE_CONFIG.phone}`}
                 className="flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors">
-                  <Phone className="h-6 w-6 text-primary group-hover:text-white transition-colors" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors duration-200">
+                  <Phone className="h-6 w-6 text-primary group-hover:text-white transition-colors duration-200" aria-hidden="true" />
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Call Us</div>
-                  <div className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                  <div className="font-semibold text-foreground group-hover:text-primary transition-colors duration-200">
                     {SITE_CONFIG.phone}
                   </div>
                 </div>
@@ -85,12 +85,12 @@ export function ContactForm() {
                 href={`mailto:${SITE_CONFIG.email}`}
                 className="flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors">
-                  <Mail className="h-6 w-6 text-primary group-hover:text-white transition-colors" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary transition-colors duration-200">
+                  <Mail className="h-6 w-6 text-primary group-hover:text-white transition-colors duration-200" aria-hidden="true" />
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Email Us</div>
-                  <div className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                  <div className="font-semibold text-foreground group-hover:text-primary transition-colors duration-200">
                     {SITE_CONFIG.email}
                   </div>
                 </div>
@@ -98,7 +98,7 @@ export function ContactForm() {
 
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <MapPin className="h-6 w-6 text-primary" />
+                  <MapPin className="h-6 w-6 text-primary" aria-hidden="true" />
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Location</div>
@@ -113,16 +113,16 @@ export function ContactForm() {
           {/* Form */}
           <div className="bg-muted rounded-2xl p-6 md:p-8">
             {isSubmitted ? (
-              <div className="flex flex-col items-center justify-center h-full text-center py-12">
+              <div className="flex flex-col items-center justify-center h-full text-center py-12" role="status" aria-live="polite">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+                  <CheckCircle className="h-8 w-8 text-green-600" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   Thank You!
                 </h3>
                 <p className="text-muted-foreground">
                   We&apos;ve received your message and will get back to you
-                  within 24 hours.
+                  within 24&nbsp;hours.
                 </p>
               </div>
             ) : (
@@ -136,12 +136,15 @@ export function ContactForm() {
                   <Label htmlFor="name">Full Name</Label>
                   <Input
                     id="name"
-                    placeholder="John Smith"
+                    placeholder="John Smith…"
+                    autoComplete="name"
+                    aria-invalid={errors.name ? "true" : undefined}
+                    aria-describedby={errors.name ? "name-error" : undefined}
                     {...register("name")}
                     className={errors.name ? "border-destructive" : ""}
                   />
                   {errors.name && (
-                    <p className="text-sm text-destructive">
+                    <p id="name-error" className="text-sm text-destructive" role="alert">
                       {errors.name.message}
                     </p>
                   )}
@@ -153,12 +156,16 @@ export function ContactForm() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="john@example.com…"
+                    autoComplete="email"
+                    spellCheck={false}
+                    aria-invalid={errors.email ? "true" : undefined}
+                    aria-describedby={errors.email ? "email-error" : undefined}
                     {...register("email")}
                     className={errors.email ? "border-destructive" : ""}
                   />
                   {errors.email && (
-                    <p className="text-sm text-destructive">
+                    <p id="email-error" className="text-sm text-destructive" role="alert">
                       {errors.email.message}
                     </p>
                   )}
@@ -170,12 +177,16 @@ export function ContactForm() {
                   <Input
                     id="phone"
                     type="tel"
-                    placeholder="(713) 555-0123"
+                    inputMode="tel"
+                    placeholder="(713) 555-0123…"
+                    autoComplete="tel"
+                    aria-invalid={errors.phone ? "true" : undefined}
+                    aria-describedby={errors.phone ? "phone-error" : undefined}
                     {...register("phone")}
                     className={errors.phone ? "border-destructive" : ""}
                   />
                   {errors.phone && (
-                    <p className="text-sm text-destructive">
+                    <p id="phone-error" className="text-sm text-destructive" role="alert">
                       {errors.phone.message}
                     </p>
                   )}
@@ -186,9 +197,12 @@ export function ContactForm() {
                   <Label htmlFor="service">Service Needed</Label>
                   <Select onValueChange={(value) => setValue("service", value)}>
                     <SelectTrigger
+                      id="service"
+                      aria-invalid={errors.service ? "true" : undefined}
+                      aria-describedby={errors.service ? "service-error" : undefined}
                       className={errors.service ? "border-destructive" : ""}
                     >
-                      <SelectValue placeholder="Select a service" />
+                      <SelectValue placeholder="Select a service…" />
                     </SelectTrigger>
                     <SelectContent>
                       {SERVICES.map((service) => (
@@ -200,7 +214,7 @@ export function ContactForm() {
                     </SelectContent>
                   </Select>
                   {errors.service && (
-                    <p className="text-sm text-destructive">
+                    <p id="service-error" className="text-sm text-destructive" role="alert">
                       {errors.service.message}
                     </p>
                   )}
@@ -211,13 +225,15 @@ export function ContactForm() {
                   <Label htmlFor="message">Project Details</Label>
                   <Textarea
                     id="message"
-                    placeholder="Tell us about your project..."
+                    placeholder="Tell us about your project…"
                     rows={4}
+                    aria-invalid={errors.message ? "true" : undefined}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                     {...register("message")}
                     className={errors.message ? "border-destructive" : ""}
                   />
                   {errors.message && (
-                    <p className="text-sm text-destructive">
+                    <p id="message-error" className="text-sm text-destructive" role="alert">
                       {errors.message.message}
                     </p>
                   )}
@@ -228,16 +244,16 @@ export function ContactForm() {
                   type="submit"
                   size="lg"
                   className="w-full bg-primary hover:bg-primary/90"
-                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Sending...
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
+                      Sending…
                     </>
                   ) : (
                     <>
-                      <Send className="mr-2 h-5 w-5" />
+                      <Send className="mr-2 h-5 w-5" aria-hidden="true" />
                       Send Message
                     </>
                   )}
