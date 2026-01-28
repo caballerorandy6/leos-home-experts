@@ -27,21 +27,21 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white/95 backdrop-blur-sm shadow-md"
+          ? "bg-white/80 backdrop-blur-md shadow-md"
           : "bg-transparent"
       )}
     >
       <div className="container-custom">
-        <nav className="flex items-center justify-between h-14 md:h-16">
+        <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo.avif"
               alt="Leo's Home Experts Logo"
-              width={200}
-              height={70}
+              width={180}
+              height={56}
               className={cn(
-                "h-14 w-auto md:h-16 transition-all contrast-110 saturate-110",
+                "h-12 w-auto md:h-14 transition-all contrast-110 saturate-110",
                 !isScrolled && "brightness-0 invert"
               )}
               priority
