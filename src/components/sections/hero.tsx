@@ -1,20 +1,51 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export function Hero() {
+  const [showVideo, setShowVideo] = useState(false)
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!prefersReducedMotion) {
+      setShowVideo(true)
+    }
+  }, [])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop')",
-        }}
-      >
-        <div className="absolute inset-0 bg-linear-to-r from-primary/90 to-primary/70" />
+      {/* Background Video/Image */}
+      <div className="absolute inset-0">
+        {/* Fallback Image */}
+        <Image
+          src="/image-8.avif"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+
+        {/* Video */}
+        {showVideo && (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/v-8.webm" type="video/webm" />
+          </video>
+        )}
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/70 to-primary/60" />
       </div>
 
       {/* Content */}
@@ -47,7 +78,7 @@ export function Hero() {
             >
               <Link href="#contact">
                 Get Free Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
               </Link>
             </Button>
             <Button
@@ -57,7 +88,7 @@ export function Hero() {
               className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary text-lg px-8"
             >
               <a href={`tel:${SITE_CONFIG.phone}`}>
-                <Phone className="mr-2 h-5 w-5" />
+                <Phone className="mr-2 h-5 w-5" aria-hidden="true" />
                 Call Now
               </a>
             </Button>

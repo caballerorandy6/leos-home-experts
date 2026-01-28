@@ -9,7 +9,6 @@ import { Phone, X, Menu } from 'lucide-react'
 
 import { Button } from '@/components/studio/Button'
 import { Container } from '@/components/studio/Container'
-import { GridPattern } from '@/components/studio/GridPattern'
 import { Footer } from '@/components/studio/Footer'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -85,10 +84,10 @@ function Header() {
   return (
     <header
       className={clsx(
-        'fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-sm'
-          : 'bg-white/50 backdrop-blur-sm'
+          ? 'bg-white/95 backdrop-blur-md shadow-lg'
+          : 'bg-transparent'
       )}
     >
       <Container>
@@ -100,7 +99,10 @@ function Header() {
               alt=""
               width={180}
               height={60}
-              className="h-12 w-auto sm:h-14 contrast-110"
+              className={clsx(
+                'h-12 w-auto sm:h-14 transition-all duration-300',
+                isScrolled ? 'brightness-100' : 'brightness-0 invert'
+              )}
               priority
             />
           </Link>
@@ -116,9 +118,13 @@ function Header() {
                   onClick={handleLinkClick}
                   className={clsx(
                     'relative px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200',
-                    isActive
-                      ? 'text-primary'
-                      : 'text-primary/70 hover:text-primary hover:bg-primary/5'
+                    isScrolled
+                      ? isActive
+                        ? 'text-primary'
+                        : 'text-primary/70 hover:text-primary hover:bg-primary/5'
+                      : isActive
+                        ? 'text-white'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
                   )}
                   aria-current={isActive ? 'true' : undefined}
                 >
@@ -127,7 +133,10 @@ function Header() {
                   {isActive && (
                     <motion.span
                       layoutId="activeSection"
-                      className="absolute inset-0 rounded-full bg-secondary/20 -z-10"
+                      className={clsx(
+                        'absolute inset-0 rounded-full -z-10',
+                        isScrolled ? 'bg-secondary/20' : 'bg-white/20'
+                      )}
                       transition={{
                         type: 'spring',
                         stiffness: 380,
@@ -144,7 +153,12 @@ function Header() {
           <div className="hidden lg:flex items-center gap-x-4">
             <a
               href={`tel:${SITE_CONFIG.phone}`}
-              className="flex items-center gap-2 text-sm font-semibold text-primary/70 hover:text-primary transition-colors duration-200"
+              className={clsx(
+                'flex items-center gap-2 text-sm font-semibold transition-colors duration-200',
+                isScrolled
+                  ? 'text-primary/70 hover:text-primary'
+                  : 'text-white/80 hover:text-white'
+              )}
             >
               <Phone className="h-4 w-4" aria-hidden="true" />
               <span>{SITE_CONFIG.phone}</span>
@@ -164,8 +178,10 @@ function Header() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={clsx(
                 'p-2.5 rounded-full transition-colors duration-200',
-                'text-primary hover:bg-primary/10',
-                isMobileMenuOpen && 'bg-primary/10'
+                isScrolled
+                  ? 'text-primary hover:bg-primary/10'
+                  : 'text-white hover:bg-white/10',
+                isMobileMenuOpen && (isScrolled ? 'bg-primary/10' : 'bg-white/10')
               )}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
@@ -256,18 +272,9 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
     <>
       <Header />
 
-      <div className="relative flex flex-auto flex-col bg-white pt-20">
-        <div className="relative isolate flex w-full flex-col">
-          <GridPattern
-            className="absolute inset-x-0 -top-14 -z-10 h-[1000px] w-full mask-[linear-gradient(to_bottom_left,white_40%,transparent_50%)] fill-neutral-50 stroke-primary/5"
-            yOffset={-96}
-            interactive
-          />
-
-          <main className="w-full flex-auto">{children}</main>
-
-          <Footer />
-        </div>
+      <div className="relative flex flex-auto flex-col bg-white">
+        <main className="w-full flex-auto">{children}</main>
+        <Footer />
       </div>
     </>
   )
