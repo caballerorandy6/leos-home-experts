@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
   name: "Leo's Home Experts",
   url: "https://leoshomeexperts.com",
-  phone: "(713) 555-0123",
+  phone: "+1 (346) 219-9138",
   email: "info@leoshomeexperts.com",
   address: {
     street: "Houston, TX",

@@ -7,7 +7,6 @@ import { z } from 'zod'
 import { Phone, CheckCircle, ArrowRight, Loader2 } from 'lucide-react'
 import { Container } from '@/components/studio/Container'
 import { FadeIn } from '@/components/studio/FadeIn'
-import { Button } from '@/components/studio/Button'
 import { SITE_CONFIG, SERVICES } from '@/lib/constants'
 
 const quickFormSchema = z.object({
@@ -43,12 +42,27 @@ export function HeroSection() {
 
   const onSubmit = async (data: QuickFormData) => {
     setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    console.log('Quick form submitted:', data)
-    setIsSubmitted(true)
-    setIsSubmitting(false)
-    reset()
-    setTimeout(() => setIsSubmitted(false), 5000)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send')
+      }
+
+      setIsSubmitted(true)
+      reset()
+      setTimeout(() => setIsSubmitted(false), 5000)
+    } catch (error) {
+      console.error('Form submission error:', error)
+      alert('There was an error sending your message. Please try again or call us directly.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -117,18 +131,21 @@ export function HeroSection() {
             </div>
 
             {/* CTA Buttons - Mobile */}
-            <div className="mt-8 flex flex-wrap gap-4 lg:hidden">
-              <Button href="#contact" variant="secondary" className="flex-1 sm:flex-none justify-center">
-                Get Free Quote
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Button>
-              <Button
-                href={`tel:${SITE_CONFIG.phone}`}
-                className="flex-1 sm:flex-none justify-center bg-white/10 text-white border border-white/20 hover:bg-white/20"
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 lg:hidden">
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-secondary hover:bg-secondary/90 text-primary font-semibold text-lg rounded-full shadow-lg transition-colors duration-200"
               >
-                <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
+                Get Free Quote
+                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              </a>
+              <a
+                href={`tel:${SITE_CONFIG.phone}`}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-lg rounded-full border-2 border-white/30 backdrop-blur-sm transition-colors duration-200"
+              >
+                <Phone className="h-5 w-5" aria-hidden="true" />
                 Call Now
-              </Button>
+              </a>
             </div>
 
             {/* Features List - Desktop */}

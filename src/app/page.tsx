@@ -1,11 +1,12 @@
 import { RootLayout } from '@/components/studio/RootLayout'
 import { HeroSection } from '@/components/sections/landing/hero-section'
-import { StatsSection } from '@/components/sections/landing/stats-section'
+import { GallerySection } from '@/components/sections/landing/gallery-section'
 import { ServicesSection } from '@/components/sections/landing/services-section'
-import { WhyChooseUsSection } from '@/components/sections/landing/why-choose-us-section'
 import { TestimonialsSection } from '@/components/sections/landing/testimonials-section'
+import { WhyChooseUsSection } from '@/components/sections/landing/why-choose-us-section'
 import { ServiceAreasSection } from '@/components/sections/landing/service-areas-section'
 import { ContactSection } from '@/components/sections/landing/contact-section'
+import { FloatingCTA } from '@/components/sections/landing/floating-cta'
 import {
   LocalBusinessJsonLd,
   ServicesJsonLd,
@@ -19,12 +20,13 @@ export default function HomePage() {
       <ServicesJsonLd />
       <WebsiteJsonLd />
       <HeroSection />
-      <StatsSection />
+      <GallerySection />
       <ServicesSection />
-      <WhyChooseUsSection />
       <TestimonialsSection />
+      <WhyChooseUsSection />
       <ServiceAreasSection />
       <ContactSection />
+      <FloatingCTA />
     </RootLayout>
   )
 }

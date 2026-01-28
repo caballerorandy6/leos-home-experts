@@ -13,10 +13,8 @@ import { Footer } from '@/components/studio/Footer'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const NAV_ITEMS = [
+  { label: 'Our Work', href: '#gallery', id: 'gallery' },
   { label: 'Services', href: '#services', id: 'services' },
-  { label: 'About', href: '#about', id: 'about' },
-  { label: 'Testimonials', href: '#testimonials', id: 'testimonials' },
-  { label: 'Areas', href: '#areas', id: 'areas' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
@@ -26,10 +24,15 @@ function Header() {
   const [activeSection, setActiveSection] = useState('')
   const shouldReduceMotion = useReducedMotion()
 
-  // Track scroll position for header background
+  // Track scroll position for header background and hero detection
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
+
+      // Clear active section when user is in the hero area
+      if (window.scrollY < window.innerHeight * 0.5) {
+        setActiveSection('')
+      }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -42,6 +45,9 @@ function Header() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Only update if user has scrolled past hero
+        if (window.scrollY < window.innerHeight * 0.5) return
+
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id)
@@ -169,7 +175,19 @@ function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex lg:hidden items-center gap-3">
+          <div className="flex lg:hidden items-center gap-2 sm:gap-3">
+            <a
+              href={`tel:${SITE_CONFIG.phone}`}
+              className={clsx(
+                'p-2.5 rounded-full transition-colors duration-200',
+                isScrolled
+                  ? 'text-primary hover:bg-primary/10'
+                  : 'text-white hover:bg-white/10'
+              )}
+              aria-label="Call us"
+            >
+              <Phone className="h-5 w-5" aria-hidden="true" />
+            </a>
             <Button href="#contact" variant="secondary" className="hidden sm:inline-flex text-xs px-3 py-1">
               Get Quote
             </Button>
