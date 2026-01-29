@@ -23,7 +23,7 @@ export function Hero() {
       <div className="absolute inset-0">
         {/* Fallback Image */}
         <Image
-          src="/image-8.avif"
+          src="/carousel/image-12.avif"
           alt=""
           fill
           priority

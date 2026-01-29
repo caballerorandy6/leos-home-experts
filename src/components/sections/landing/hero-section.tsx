@@ -71,7 +71,7 @@ export function HeroSection() {
       <div className="absolute inset-0">
         {/* Fallback Image */}
         <img
-          src="/image-8.avif"
+          src="/carousel/image-12.avif"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -83,7 +83,7 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            poster="/image-8.avif"
+            poster="/carousel/image-12.avif"
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/v-8.webm" type="video/webm" />
