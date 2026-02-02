@@ -110,9 +110,9 @@ export function Footer() {
             <Image
               src="/brand/logo.avif"
               alt=""
-              width={160}
-              height={50}
-              className="h-12 w-auto"
+              width={200}
+              height={64}
+              className="h-16 w-auto"
             />
           </Link>
           <div className="text-sm text-neutral-700">
