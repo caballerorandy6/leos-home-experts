@@ -50,7 +50,7 @@ export function ServiceAreasSection() {
                     ))}
                   </ul>
                   <p className="mt-4 text-sm text-neutral-400">
-                    * Curtains, Shades &amp; Awnings services available
+                    * Awnings services available
                   </p>
                 </div>
               </div>

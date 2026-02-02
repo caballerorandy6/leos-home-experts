@@ -16,34 +16,49 @@ import {
 
 const GALLERY_IMAGES = [
   {
-    src: '/carousel/image-9.avif',
-    alt: 'Interior remodeling project in Houston',
-    title: 'Interior Remodeling',
+    src: '/carousel/patio-build-remodeling-1.avif',
+    alt: 'Custom patio build project in Houston',
+    title: 'Patio Build',
   },
   {
-    src: '/carousel/image-11.avif',
-    alt: 'Patio renovation with custom shades',
-    title: 'Patio Renovation',
+    src: '/carousel/patio-build-remodeling-2.avif',
+    alt: 'Patio remodeling with custom design',
+    title: 'Patio Remodeling',
   },
   {
-    src: '/carousel/image-12.avif',
-    alt: 'Custom patio shades installation',
+    src: '/carousel/patio-build-remodeling-3.avif',
+    alt: 'Outdoor patio construction project',
+    title: 'Patio Construction',
+  },
+  {
+    src: '/carousel/patio-shades-1.avif',
+    alt: 'Custom patio shades installation in Houston',
     title: 'Patio Shades',
   },
   {
-    src: '/carousel/image-9.avif',
-    alt: 'Elegant curtains and window treatments',
-    title: 'Curtains & Shades',
+    src: '/carousel/patio-shades-2.avif',
+    alt: 'Premium shade solutions for outdoor spaces',
+    title: 'Custom Shades',
   },
   {
-    src: '/carousel/awning.avif',
+    src: '/carousel/patio-shades-3.avif',
+    alt: 'Professional patio shade project',
+    title: 'Shade Installation',
+  },
+  {
+    src: '/carousel/awning-1.avif',
     alt: 'Professional awning installation',
     title: 'Awnings',
   },
   {
-    src: '/carousel/image-11.avif',
-    alt: 'Custom home renovation',
-    title: 'Home Renovation',
+    src: '/carousel/awning-2.avif',
+    alt: 'Custom awning for residential home',
+    title: 'Residential Awning',
+  },
+  {
+    src: '/carousel/awning-3.avif',
+    alt: 'Awning project showcase in Houston area',
+    title: 'Awning Project',
   },
 ]
 
@@ -88,12 +103,12 @@ export function GallerySection() {
                   key={index}
                   className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
                 >
-                  <div className="relative aspect-4/3 overflow-hidden rounded-2xl group cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+                  <div className="relative aspect-4/3 overflow-hidden rounded-2xl group cursor-pointer shadow-md hover:shadow-2xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1">
                     <Image
                       src={image.src}
                       alt={image.alt}
                       fill
-                      className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
 

@@ -8,18 +8,11 @@ import { SITE_CONFIG, SERVICES, SERVICE_AREAS } from '@/lib/constants'
 
 const navigation = [
   {
-    title: 'Services',
-    links: SERVICES.slice(0, 4).map(service => ({
-      title: service.title,
-      href: '#services',
-    })),
-  },
-  {
-    title: 'Company',
+    title: 'Navigation',
     links: [
-      { title: 'About Us', href: '#about' },
+      { title: 'Services', href: '#services' },
+      { title: 'Our Work', href: '#gallery' },
       { title: 'Testimonials', href: '#testimonials' },
-      { title: 'Service Areas', href: '#areas' },
       { title: 'Contact', href: '#contact' },
     ],
   },
@@ -34,7 +27,7 @@ const navigation = [
 function Navigation() {
   return (
     <nav>
-      <ul role="list" className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+      <ul role="list" className="grid grid-cols-2 gap-8">
         {navigation.map((section, sectionIndex) => (
           <li key={sectionIndex}>
             <div className="font-display text-sm font-semibold tracking-wider text-primary">
@@ -75,11 +68,18 @@ function ContactInfo() {
           {SITE_CONFIG.phone}
         </a>
         <a
-          href={`mailto:${SITE_CONFIG.email}`}
+          href="mailto:lecour@ac-remodelingservice.com"
           className="flex items-center gap-2 transition hover:text-primary"
         >
           <Mail className="h-4 w-4" />
-          {SITE_CONFIG.email}
+          lecour@ac-remodelingservice.com
+        </a>
+        <a
+          href="mailto:leleac1987@gmail.com"
+          className="flex items-center gap-2 transition hover:text-primary"
+        >
+          <Mail className="h-4 w-4" />
+          leleac1987@gmail.com
         </a>
         <div className="flex items-center gap-2">
           <MapPin className="h-4 w-4" />
@@ -103,16 +103,27 @@ export function Footer() {
         <div className="mt-24 mb-20 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-primary/10 pt-12">
           <Link href="/" aria-label="Home">
             <Image
-              src="/logo.avif"
+              src="/brand/logo.avif"
               alt="Leo's Home Experts"
               width={160}
               height={50}
               className="h-12 w-auto"
             />
           </Link>
-          <p className="text-sm text-neutral-700">
-            &copy; {SITE_CONFIG.name} {new Date().getFullYear()}
-          </p>
+          <div className="text-sm text-neutral-700">
+            <p>&copy; {SITE_CONFIG.name} {new Date().getFullYear()}</p>
+            <p className="mt-1">
+              Built by{' '}
+              <a
+                href="https://rcweb.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:text-primary/80 transition-colors duration-200"
+              >
+                RC Web Solutions LLC
+              </a>
+            </p>
+          </div>
         </div>
       </FadeIn>
     </Container>

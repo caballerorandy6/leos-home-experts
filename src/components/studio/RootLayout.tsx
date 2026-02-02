@@ -13,8 +13,9 @@ import { Footer } from '@/components/studio/Footer'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const NAV_ITEMS = [
-  { label: 'Our Work', href: '#gallery', id: 'gallery' },
   { label: 'Services', href: '#services', id: 'services' },
+  { label: 'Our Work', href: '#gallery', id: 'gallery' },
+  { label: 'Testimonials', href: '#testimonials', id: 'testimonials' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
@@ -104,7 +105,7 @@ function Header() {
   return (
     <header
       className={clsx(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300',
         isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
@@ -115,12 +116,12 @@ function Header() {
           {/* Logo */}
           <Link href="/" aria-label="Leo's Home Experts - Home" className="shrink-0">
             <Image
-              src="/logo.avif"
+              src="/brand/logo.avif"
               alt=""
               width={180}
               height={60}
               className={clsx(
-                'h-12 w-auto sm:h-14 transition-all duration-300',
+                'h-12 w-auto sm:h-14 transition-[filter] duration-300',
                 isScrolled ? 'brightness-100' : 'brightness-0 invert'
               )}
               priority
@@ -302,10 +303,16 @@ function Header() {
 export function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+      >
+        Skip to main content
+      </a>
       <Header />
 
       <div className="relative flex flex-auto flex-col bg-white">
-        <main className="w-full flex-auto">{children}</main>
+        <main id="main-content" className="w-full flex-auto">{children}</main>
         <Footer />
       </div>
     </>

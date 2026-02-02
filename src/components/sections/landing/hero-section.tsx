@@ -1,37 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Phone, CheckCircle, ArrowRight, Loader2 } from 'lucide-react'
+import Image from 'next/image'
+import { Phone, CheckCircle, ArrowRight } from 'lucide-react'
 import { Container } from '@/components/studio/Container'
 import { FadeIn } from '@/components/studio/FadeIn'
-import { SITE_CONFIG, SERVICES } from '@/lib/constants'
-
-const quickFormSchema = z.object({
-  name: z.string().min(2, 'Name is required'),
-  email: z.string().email('Valid email required'),
-  phone: z.string().min(10, 'Valid phone required'),
-  service: z.string().min(1, 'Select a service'),
-  message: z.string().min(10, 'Please describe your project'),
-})
-
-type QuickFormData = z.infer<typeof quickFormSchema>
+import { QuoteForm } from '@/components/sections/quote-form'
+import { SITE_CONFIG } from '@/lib/constants'
 
 export function HeroSection() {
   const [showVideo, setShowVideo] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<QuickFormData>({
-    resolver: zodResolver(quickFormSchema),
-  })
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -40,40 +18,18 @@ export function HeroSection() {
     }
   }, [])
 
-  const onSubmit = async (data: QuickFormData) => {
-    setIsSubmitting(true)
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to send')
-      }
-
-      setIsSubmitted(true)
-      reset()
-      setTimeout(() => setIsSubmitted(false), 5000)
-    } catch (error) {
-      console.error('Form submission error:', error)
-      alert('There was an error sending your message. Please try again or call us directly.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
   return (
     <section id="home" className="relative min-h-screen flex items-center">
       {/* Video Background */}
       <div className="absolute inset-0">
         {/* Fallback Image */}
-        <img
-          src="/carousel/image-12.avif"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
+        <Image
+          src="/carousel/patio-build-remodeling-1.avif"
+          alt="Professional patio construction and remodeling by Leo's Home Experts in Houston, TX"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
         />
 
         {/* Video */}
@@ -83,10 +39,10 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            poster="/carousel/image-12.avif"
+            poster="/carousel/patio-build-remodeling-1.avif"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/v-8.webm" type="video/webm" />
+            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto/leos-home-expert/hero-video" type="video/webm" />
           </video>
         )}
 
@@ -108,15 +64,15 @@ export function HeroSection() {
               className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance text-white leading-[1.1]"
               style={{ textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
             >
-              Transform Your Home{' '}
-              <span className="text-secondary drop-shadow-lg">Inside &amp; Out</span>
+              Transform Your{' '}
+              <span className="text-secondary drop-shadow-lg">Outdoor Space</span>
             </h1>
 
             <p
               className="mt-6 text-lg sm:text-xl text-white max-w-xl leading-relaxed"
               style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}
             >
-              Expert interior remodeling, patio renovations, custom shades, curtains,
+              Expert patio construction, remodeling, custom shades,
               and awnings. Quality craftsmanship and honest pricing.
             </p>
 
@@ -168,135 +124,11 @@ export function HeroSection() {
           {/* Right: Quick Contact Form */}
           <FadeIn className="hidden lg:block">
             <div className="bg-white/90 backdrop-blur-md rounded-3xl p-8 shadow-2xl">
-              {isSubmitted ? (
-                <div className="text-center py-8" role="status" aria-live="polite">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="h-8 w-8 text-green-600" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-primary mb-2">Thank You!</h3>
-                  <p className="text-neutral-600">
-                    We&apos;ll call you back within 24&nbsp;hours.
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl font-semibold text-primary">Get Your Free Quote</h2>
-                    <p className="text-neutral-600 mt-1">We&apos;ll call you back today</p>
-                  </div>
-
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-                    <div>
-                      <input
-                        type="text"
-                        placeholder="Full Name"
-                        autoComplete="name"
-                        aria-invalid={errors.name ? 'true' : undefined}
-                        {...register('name')}
-                        className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-colors"
-                      />
-                      {errors.name && (
-                        <p className="text-sm text-red-500 mt-1" role="alert">{errors.name.message}</p>
-                      )}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <input
-                          type="email"
-                          placeholder="Email Address"
-                          autoComplete="email"
-                          spellCheck={false}
-                          aria-invalid={errors.email ? 'true' : undefined}
-                          {...register('email')}
-                          className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-colors"
-                        />
-                        {errors.email && (
-                          <p className="text-sm text-red-500 mt-1" role="alert">{errors.email.message}</p>
-                        )}
-                      </div>
-
-                      <div>
-                        <input
-                          type="tel"
-                          placeholder="Phone Number"
-                          autoComplete="tel"
-                          inputMode="tel"
-                          aria-invalid={errors.phone ? 'true' : undefined}
-                          {...register('phone')}
-                          className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-colors"
-                        />
-                        {errors.phone && (
-                          <p className="text-sm text-red-500 mt-1" role="alert">{errors.phone.message}</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div>
-                      <select
-                        aria-invalid={errors.service ? 'true' : undefined}
-                        {...register('service')}
-                        className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-colors text-neutral-600"
-                        defaultValue=""
-                      >
-                        <option value="" disabled>Select a Service</option>
-                        {SERVICES.map((service) => (
-                          <option key={service.id} value={service.id}>
-                            {service.title}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.service && (
-                        <p className="text-sm text-red-500 mt-1" role="alert">{errors.service.message}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <textarea
-                        placeholder="Tell us about your project..."
-                        rows={3}
-                        aria-invalid={errors.message ? 'true' : undefined}
-                        {...register('message')}
-                        className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-colors resize-none"
-                      />
-                      {errors.message && (
-                        <p className="text-sm text-red-500 mt-1" role="alert">{errors.message.message}</p>
-                      )}
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      aria-busy={isSubmitting}
-                      className="w-full py-4 px-6 bg-secondary hover:bg-secondary/90 text-primary font-semibold rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-70"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          Get Free Quote
-                          <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                        </>
-                      )}
-                    </button>
-                  </form>
-
-                  <p className="text-center text-sm text-neutral-500 mt-4">
-                    Or call us directly:{' '}
-                    <a href={`tel:${SITE_CONFIG.phone}`} className="text-primary font-semibold hover:underline">
-                      {SITE_CONFIG.phone}
-                    </a>
-                  </p>
-                </>
-              )}
+              <QuoteForm variant="hero" />
             </div>
           </FadeIn>
         </div>
       </Container>
-
     </section>
   )
 }

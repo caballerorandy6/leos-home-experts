@@ -14,7 +14,7 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <Image
-              src="/logo.avif"
+              src="/brand/logo.avif"
               alt="Leo's Home Experts Logo"
               width={200}
               height={70}
@@ -89,15 +89,17 @@ export function Footer() {
                   {SITE_CONFIG.phone}
                 </a>
               </li>
-              <li>
-                <a
-                  href={`mailto:${SITE_CONFIG.email}`}
-                  className="flex items-center gap-2 text-white/80 text-sm hover:text-secondary transition-colors"
-                >
-                  <Mail className="h-4 w-4 shrink-0" />
-                  {SITE_CONFIG.email}
-                </a>
-              </li>
+              {SITE_CONFIG.emails.map((email) => (
+                <li key={email}>
+                  <a
+                    href={`mailto:${email}`}
+                    className="flex items-center gap-2 text-white/80 text-sm hover:text-secondary transition-colors"
+                  >
+                    <Mail className="h-4 w-4 shrink-0" />
+                    {email}
+                  </a>
+                </li>
+              ))}
               <li className="flex items-start gap-2 text-white/80 text-sm">
                 <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
                 <span>

@@ -3,12 +3,15 @@ import { SITE_CONFIG, SERVICES } from "@/lib/constants";
 export function LocalBusinessJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "HomeAndConstructionBusiness",
     "@id": `${SITE_CONFIG.url}/#localbusiness`,
     name: SITE_CONFIG.name,
+    description:
+      "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX. Licensed, insured, and trusted by homeowners.",
     url: SITE_CONFIG.url,
     telephone: SITE_CONFIG.phone,
-    email: SITE_CONFIG.email,
+    email: SITE_CONFIG.emails[0],
+    image: `${SITE_CONFIG.url}/brand/og-image.png`,
     address: {
       "@type": "PostalAddress",
       addressLocality: SITE_CONFIG.address.city,

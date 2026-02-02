@@ -40,7 +40,7 @@ export function Hero() {
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/v-8.webm" type="video/webm" />
+            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto/leos-home-expert/hero-video" type="video/webm" />
           </video>
         )}
 
@@ -59,13 +59,13 @@ export function Hero() {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Transform Your Home{" "}
-            <span className="text-secondary">Inside &amp; Out</span>
+            Transform Your{" "}
+            <span className="text-secondary">Outdoor Space</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl">
-            Expert interior remodeling, patio renovations, shades, and awnings.
+            Expert patio construction, remodeling, shades, and awnings.
             Quality craftsmanship you can trust for your Houston home.
           </p>
 

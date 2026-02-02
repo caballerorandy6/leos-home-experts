@@ -25,23 +25,23 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300",
         isScrolled
           ? "bg-white/80 backdrop-blur-md shadow-md"
           : "bg-transparent"
       )}
     >
       <div className="container-custom">
-        <nav className="flex items-center justify-between h-20">
+        <nav aria-label="Main navigation" className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/logo.avif"
+              src="/brand/logo.avif"
               alt="Leo's Home Experts Logo"
               width={180}
               height={56}
               className={cn(
-                "h-12 w-auto md:h-14 transition-all contrast-110 saturate-110",
+                "h-12 w-auto md:h-14 transition-[filter] contrast-110 saturate-110",
                 !isScrolled && "brightness-0 invert"
               )}
               priority
@@ -73,8 +73,8 @@ export function Header() {
                 isScrolled ? "text-foreground" : "text-white"
               )}
             >
-              <Phone className="h-4 w-4" />
-              {SITE_CONFIG.phone}
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              <span aria-label="Call us">{SITE_CONFIG.phone}</span>
             </a>
             <Button asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
               <Link href="#contact">Get Free Quote</Link>
@@ -103,7 +103,7 @@ export function Header() {
                   onClick={() => setIsOpen(false)}
                 >
                   <Image
-                    src="/logo.avif"
+                    src="/brand/logo.avif"
                     alt="Leo's Home Experts Logo"
                     width={140}
                     height={45}
@@ -127,7 +127,7 @@ export function Header() {
                     href={`tel:${SITE_CONFIG.phone}`}
                     className="flex items-center gap-2 text-foreground font-medium"
                   >
-                    <Phone className="h-5 w-5" />
+                    <Phone className="h-5 w-5" aria-hidden="true" />
                     {SITE_CONFIG.phone}
                   </a>
                   <Button

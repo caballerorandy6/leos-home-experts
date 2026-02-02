@@ -4,24 +4,28 @@ import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_CONFIG.name} | Interior Remodeling & Patio Services Houston TX`,
+    default: `${SITE_CONFIG.name} | Patio Build, Shades & Awnings Houston TX`,
     template: `%s | ${SITE_CONFIG.name}`,
   },
   description:
-    "Expert interior remodeling, patio renovations, shades, curtains, and awnings in Houston, TX. Licensed, insured, and trusted by homeowners. Get a free quote today!",
+    "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX. Licensed, insured, and trusted by homeowners. Get a free quote today!",
   metadataBase: new URL(SITE_CONFIG.url),
-  other: {
-    "theme-color": "#ffffff",
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/brand/logo.avif",
   },
   keywords: [
-    "interior remodeling Houston",
+    "patio build Houston TX",
     "patio remodeling Houston TX",
     "patio shades Houston",
     "awnings Houston Texas",
-    "curtains installation Houston",
-    "home remodeling near me",
-    "Houston home improvement",
+    "awning installation Houston",
     "outdoor living spaces Houston",
+    "patio construction Houston",
+    "Houston home improvement",
   ],
   authors: [{ name: SITE_CONFIG.name }],
   creator: SITE_CONFIG.name,
@@ -36,24 +40,24 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
-    title: `${SITE_CONFIG.name} | Interior Remodeling & Patio Services Houston TX`,
+    title: `${SITE_CONFIG.name} | Patio Build, Shades & Awnings Houston TX`,
     description:
-      "Expert interior remodeling, patio renovations, shades, curtains, and awnings in Houston, TX. Get a free quote today!",
+      "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX. Get a free quote today!",
     images: [
       {
-        url: "/og-image.png",
+        url: "/brand/og-image.png",
         width: 1200,
         height: 630,
-        alt: SITE_CONFIG.name,
+        alt: `${SITE_CONFIG.name} - Expert patio construction, shades, and awnings in Houston TX`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_CONFIG.name} | Interior Remodeling & Patio Services Houston TX`,
+    title: `${SITE_CONFIG.name} | Patio Build, Shades & Awnings Houston TX`,
     description:
-      "Expert interior remodeling, patio renovations, shades, curtains, and awnings in Houston, TX.",
-    images: ["/og-image.png"],
+      "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX.",
+    images: ["/brand/og-image.png"],
   },
   robots: {
     index: true,

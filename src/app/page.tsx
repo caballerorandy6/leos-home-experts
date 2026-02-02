@@ -1,6 +1,7 @@
 import { RootLayout } from '@/components/studio/RootLayout'
 import { HeroSection } from '@/components/sections/landing/hero-section'
 import { GallerySection } from '@/components/sections/landing/gallery-section'
+import { VideoGallerySection } from '@/components/sections/landing/video-gallery-section'
 import { ServicesSection } from '@/components/sections/landing/services-section'
 import { TestimonialsSection } from '@/components/sections/landing/testimonials-section'
 import { WhyChooseUsSection } from '@/components/sections/landing/why-choose-us-section'
@@ -20,8 +21,9 @@ export default function HomePage() {
       <ServicesJsonLd />
       <WebsiteJsonLd />
       <HeroSection />
-      <GallerySection />
       <ServicesSection />
+      <GallerySection />
+      <VideoGallerySection />
       <TestimonialsSection />
       <WhyChooseUsSection />
       <ServiceAreasSection />

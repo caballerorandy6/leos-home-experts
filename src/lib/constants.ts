@@ -2,7 +2,10 @@ export const SITE_CONFIG = {
   name: "Leo's Home Experts",
   url: "https://leoshomeexperts.com",
   phone: "+1 (346) 219-9138",
-  email: "info@leoshomeexperts.com",
+  emails: [
+    "lecour@ac-remodelingservice.com",
+    "leleac1987@gmail.com",
+  ],
   address: {
     street: "Houston, TX",
     city: "Houston",
@@ -17,36 +20,20 @@ export const SITE_CONFIG = {
 
 export const SERVICES = [
   {
-    id: "interior-remodeling",
-    title: "Interior Remodeling",
+    id: "patio-build-remodeling",
+    title: "Patio Build & Remodeling",
     description:
-      "Transform your living spaces with our expert interior remodeling services. From kitchens to bathrooms, we bring your vision to life.",
-    icon: "Home",
-    serviceArea: "Houston Area",
-  },
-  {
-    id: "patio-remodeling",
-    title: "Patio Remodeling",
-    description:
-      "Upgrade your outdoor living space with beautiful patio designs. We create functional and stunning patios for your home.",
-    icon: "Fence",
+      "Custom patio construction and remodeling for your outdoor living space. We design and build functional, beautiful patios tailored to your home.",
+    icon: "Hammer",
     serviceArea: "Houston Area",
   },
   {
     id: "patio-shades",
     title: "Patio Shades",
     description:
-      "Keep cool and comfortable with our premium patio shade solutions. Perfect for Houston's sunny weather.",
+      "Keep cool and comfortable with our premium patio shade solutions. Custom measurements and professional installation for lasting results.",
     icon: "Sun",
     serviceArea: "Houston Area",
-  },
-  {
-    id: "curtains-shades",
-    title: "Curtains & Shades",
-    description:
-      "Elegant window treatments that combine style and functionality. Custom solutions for every room in your home.",
-    icon: "Blinds",
-    serviceArea: "150 Miles Around Houston",
   },
   {
     id: "awnings",
@@ -101,7 +88,7 @@ export const TESTIMONIALS = [
     name: "Sarah Johnson",
     location: "Sugar Land, TX",
     rating: 5,
-    text: "Our interior remodel turned out beautiful. The attention to detail and craftsmanship is outstanding.",
+    text: "Our patio shades turned out beautiful. The attention to detail and craftsmanship is outstanding. Highly recommend!",
   },
 ] as const;
 
