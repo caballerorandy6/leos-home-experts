@@ -43,7 +43,7 @@ export function HeroSection() {
             onCanPlay={() => setVideoReady(true)}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
           >
-            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto:best/leos-home-expert/hero-video" type="video/webm" />
+            <source src="/hero-video.webm" type="video/webm" />
           </video>
         )}
 

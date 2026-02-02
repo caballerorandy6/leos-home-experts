@@ -86,6 +86,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full bg-primary text-base antialiased scroll-smooth">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/Mona-Sans.var.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body className="flex min-h-full flex-col">
         {children}
       </body>

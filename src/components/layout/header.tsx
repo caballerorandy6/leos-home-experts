@@ -36,7 +36,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/brand/logo.avif"
+              src="/brand/logo-sm.avif"
               alt="Leo's Home Experts Logo"
               width={180}
               height={56}
@@ -103,7 +103,7 @@ export function Header() {
                   onClick={() => setIsOpen(false)}
                 >
                   <Image
-                    src="/brand/logo.avif"
+                    src="/brand/logo-sm.avif"
                     alt="Leo's Home Experts Logo"
                     width={140}
                     height={45}

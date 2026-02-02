@@ -14,7 +14,7 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <Image
-              src="/brand/logo.avif"
+              src="/brand/logo-sm.avif"
               alt="Leo's Home Experts Logo"
               width={200}
               height={70}
