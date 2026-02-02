@@ -40,7 +40,7 @@ export function Hero() {
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto/leos-home-expert/hero-video" type="video/webm" />
+            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto:best/leos-home-expert/hero-video" type="video/webm" />
           </video>
         )}
 

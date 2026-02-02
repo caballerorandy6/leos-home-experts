@@ -9,6 +9,7 @@ import { QuoteForm } from '@/components/sections/quote-form'
 import { SITE_CONFIG } from '@/lib/constants'
 
 export function HeroSection() {
+  const [videoReady, setVideoReady] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
 
   useEffect(() => {
@@ -39,15 +40,15 @@ export function HeroSection() {
             muted
             loop
             playsInline
-            poster="/carousel/patio-build-remodeling-1.avif"
-            className="absolute inset-0 w-full h-full object-cover"
+            onCanPlay={() => setVideoReady(true)}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
           >
-            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto/leos-home-expert/hero-video" type="video/webm" />
+            <source src="https://res.cloudinary.com/caballerorandy/video/upload/f_auto,q_auto:best/leos-home-expert/hero-video" type="video/webm" />
           </video>
         )}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-linear-to-br from-primary/70 via-primary/50 to-primary/30" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/30 to-black/10" />
       </div>
 
       <Container className="relative z-10 py-24 pt-32 lg:py-32 lg:pt-40">
