@@ -130,11 +130,12 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
             autoComplete="name"
             aria-label={isHero ? "Full Name" : undefined}
             aria-invalid={errors.name ? "true" : undefined}
+            aria-describedby={errors.name ? `${variant}-name-error` : undefined}
             {...register("name")}
             className={`${inputBase} ${errors.name ? inputError : ""}`}
           />
           {errors.name && (
-            <p className="text-sm text-red-500 mt-1" role="alert">
+            <p id={`${variant}-name-error`} className="text-sm text-red-500 mt-1" role="alert">
               {errors.name.message}
             </p>
           )}
@@ -156,11 +157,12 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
               spellCheck={false}
               aria-label={isHero ? "Email Address" : undefined}
               aria-invalid={errors.email ? "true" : undefined}
+              aria-describedby={errors.email ? `${variant}-email-error` : undefined}
               {...register("email")}
               className={`${inputBase} ${errors.email ? inputError : ""}`}
             />
             {errors.email && (
-              <p className="text-sm text-red-500 mt-1" role="alert">
+              <p id={`${variant}-email-error`} className="text-sm text-red-500 mt-1" role="alert">
                 {errors.email.message}
               </p>
             )}
@@ -179,11 +181,12 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
               inputMode="tel"
               aria-label={isHero ? "Phone Number" : undefined}
               aria-invalid={errors.phone ? "true" : undefined}
+              aria-describedby={errors.phone ? `${variant}-phone-error` : undefined}
               {...register("phone")}
               className={`${inputBase} ${errors.phone ? inputError : ""}`}
             />
             {errors.phone && (
-              <p className="text-sm text-red-500 mt-1" role="alert">
+              <p id={`${variant}-phone-error`} className="text-sm text-red-500 mt-1" role="alert">
                 {errors.phone.message}
               </p>
             )}
@@ -201,6 +204,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
             id={isHero ? undefined : `${variant}-service`}
             aria-label={isHero ? "Service Needed" : undefined}
             aria-invalid={errors.service ? "true" : undefined}
+            aria-describedby={errors.service ? `${variant}-service-error` : undefined}
             {...register("service", {
               onChange: (e) => handleServiceChange(e.target.value),
             })}
@@ -218,7 +222,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
             {!isHero && <option value="other">Other</option>}
           </select>
           {errors.service && (
-            <p className="text-sm text-red-500 mt-1" role="alert">
+            <p id={`${variant}-service-error`} className="text-sm text-red-500 mt-1" role="alert">
               {errors.service.message}
             </p>
           )}
@@ -246,6 +250,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
                   aria-label={isHero ? "Width in inches" : undefined}
                   disabled={widthUnknown}
                   aria-invalid={errors.width ? "true" : undefined}
+                  aria-describedby={errors.width ? `${variant}-width-error` : undefined}
                   {...register("width")}
                   className={`${inputBase} ${inputDisabled} ${errors.width ? inputError : ""}`}
                 />
@@ -262,7 +267,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
                   <span className="text-xs text-neutral-500">Unknown</span>
                 </label>
                 {errors.width && (
-                  <p className="text-xs text-red-500" role="alert">
+                  <p id={`${variant}-width-error`} className="text-xs text-red-500" role="alert">
                     {errors.width.message}
                   </p>
                 )}
@@ -283,6 +288,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
                   aria-label={isHero ? "Height in inches" : undefined}
                   disabled={heightUnknown}
                   aria-invalid={errors.height ? "true" : undefined}
+                  aria-describedby={errors.height ? `${variant}-height-error` : undefined}
                   {...register("height")}
                   className={`${inputBase} ${inputDisabled} ${errors.height ? inputError : ""}`}
                 />
@@ -299,7 +305,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
                   <span className="text-xs text-neutral-500">Unknown</span>
                 </label>
                 {errors.height && (
-                  <p className="text-xs text-red-500" role="alert">
+                  <p id={`${variant}-height-error`} className="text-xs text-red-500" role="alert">
                     {errors.height.message}
                   </p>
                 )}
@@ -321,11 +327,12 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
             rows={isHero ? 3 : 4}
             aria-label={isHero ? "Project Details" : undefined}
             aria-invalid={errors.message ? "true" : undefined}
+            aria-describedby={errors.message ? `${variant}-message-error` : undefined}
             {...register("message")}
             className={`${inputBase} resize-none ${errors.message ? inputError : ""}`}
           />
           {errors.message && (
-            <p className="text-sm text-red-500 mt-1" role="alert">
+            <p id={`${variant}-message-error`} className="text-sm text-red-500 mt-1" role="alert">
               {errors.message.message}
             </p>
           )}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@/styles/tailwind.css";
+import "./globals.css";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -14,8 +14,11 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/brand/logo.avif",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/brand/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/brand/apple-touch-icon.png",
   },
   keywords: [
     "patio build Houston TX",
@@ -70,10 +73,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    // Add verification codes when available
-    // google: "your-google-verification-code",
-  },
+  themeColor: "#1e3a5f",
 };
 
 export default function RootLayout({

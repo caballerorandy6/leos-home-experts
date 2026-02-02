@@ -1,13 +1,57 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@font-face {
+  font-family: 'Mona Sans';
+  font-weight: 200 900;
+  font-display: swap;
+  font-style: normal;
+  font-stretch: 75% 125%;
+  src: url('../fonts/Mona-Sans.var.woff2') format('woff2');
+}
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Typography scale */
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2.25rem;
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 3rem;
+  --text-6xl: 3rem;
+  --text-6xl--line-height: 3.5rem;
+  --text-7xl: 4rem;
+  --text-7xl--line-height: 4.5rem;
+
+  /* Fonts */
+  --font-sans:
+    Mona Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: var(--font-geist-mono);
+  --font-display:
+    Mona Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-display--font-variation-settings: 'wdth' 125;
+  --font-display-length: 2;
+
+  /* shadcn color mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -25,13 +69,19 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
+  /* Direct color values */
+  --color-secondary-light: #e4c078;
+  --color-white: #ffffff;
+
+  /* Radii */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-4xl: 2.5rem;
 }
 
 :root {
@@ -79,6 +129,14 @@
   --success-foreground: #ffffff;
 }
 
+@utility rounded-4xl {
+  border-radius: 2.5rem;
+}
+
+@utility mask-* {
+  mask-image: *;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -89,17 +147,70 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
   }
-}
 
-@layer utilities {
+  /* Better focus states - use focus-visible for keyboard users only */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Remove default focus outline for mouse users */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Better touch interactions */
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Tabular numbers for statistics */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    padding: 8px;
+    background: var(--color-primary);
+    color: white;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
   .container-custom {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
   .section-padding {
     @apply py-16 md:py-24;
   }
+}
 
+@layer utilities {
   .text-gradient {
     @apply bg-linear-to-r from-primary to-primary-light bg-clip-text text-transparent;
   }

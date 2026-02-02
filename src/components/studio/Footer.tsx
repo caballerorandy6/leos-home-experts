@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Phone, Mail, MapPin } from 'lucide-react'
 
 import { Container } from '@/components/studio/Container'
+
+const CURRENT_YEAR = new Date().getFullYear()
 import { FadeIn } from '@/components/studio/FadeIn'
 import { SITE_CONFIG, SERVICES, SERVICE_AREAS } from '@/lib/constants'
 
@@ -26,7 +28,7 @@ const navigation = [
 
 function Navigation() {
   return (
-    <nav>
+    <nav aria-label="Footer navigation">
       <ul role="list" className="grid grid-cols-2 gap-8">
         {navigation.map((section, sectionIndex) => (
           <li key={sectionIndex}>
@@ -63,26 +65,29 @@ function ContactInfo() {
         <a
           href={`tel:${SITE_CONFIG.phone}`}
           className="flex items-center gap-2 transition hover:text-primary"
+          aria-label={`Call us at ${SITE_CONFIG.phone}`}
         >
-          <Phone className="h-4 w-4" />
+          <Phone className="h-4 w-4" aria-hidden="true" />
           {SITE_CONFIG.phone}
         </a>
         <a
           href="mailto:lecour@ac-remodelingservice.com"
           className="flex items-center gap-2 transition hover:text-primary"
+          aria-label="Email us at lecour@ac-remodelingservice.com"
         >
-          <Mail className="h-4 w-4" />
+          <Mail className="h-4 w-4" aria-hidden="true" />
           lecour@ac-remodelingservice.com
         </a>
         <a
           href="mailto:leleac1987@gmail.com"
           className="flex items-center gap-2 transition hover:text-primary"
+          aria-label="Email us at leleac1987@gmail.com"
         >
-          <Mail className="h-4 w-4" />
+          <Mail className="h-4 w-4" aria-hidden="true" />
           leleac1987@gmail.com
         </a>
         <div className="flex items-center gap-2">
-          <MapPin className="h-4 w-4" />
+          <MapPin className="h-4 w-4" aria-hidden="true" />
           {SITE_CONFIG.address.city}, {SITE_CONFIG.address.state}
         </div>
       </div>
@@ -104,14 +109,14 @@ export function Footer() {
           <Link href="/" aria-label="Home">
             <Image
               src="/brand/logo.avif"
-              alt="Leo's Home Experts"
+              alt=""
               width={160}
               height={50}
               className="h-12 w-auto"
             />
           </Link>
           <div className="text-sm text-neutral-700">
-            <p>&copy; {SITE_CONFIG.name} {new Date().getFullYear()}</p>
+            <p>&copy; {SITE_CONFIG.name} {CURRENT_YEAR}</p>
             <p className="mt-1">
               Built by{' '}
               <a

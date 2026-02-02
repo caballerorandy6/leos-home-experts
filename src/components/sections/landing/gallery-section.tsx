@@ -103,7 +103,7 @@ export function GallerySection() {
                   key={index}
                   className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
                 >
-                  <div className="relative aspect-4/3 overflow-hidden rounded-2xl group cursor-pointer shadow-md hover:shadow-2xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1">
+                  <div className="relative aspect-4/3 overflow-hidden rounded-2xl group shadow-md hover:shadow-2xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1">
                     <Image
                       src={image.src}
                       alt={image.alt}

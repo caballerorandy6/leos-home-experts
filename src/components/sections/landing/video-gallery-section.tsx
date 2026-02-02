@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, type RefObject } from 'react'
 import { Play, X } from 'lucide-react'
 import { Container } from '@/components/studio/Container'
 import { FadeIn } from '@/components/studio/FadeIn'
@@ -24,6 +24,8 @@ function getVideoUrl(id: string) {
 export function VideoGallerySection() {
   const gridRef = useRef<HTMLDivElement>(null)
   const dialogVideoRef = useRef<HTMLVideoElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
   const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null)
 
   useEffect(() => {
@@ -52,13 +54,35 @@ export function VideoGallerySection() {
 
   const closeDialog = useCallback(() => {
     setActiveVideo(null)
+    triggerRef.current?.focus()
   }, [])
 
   useEffect(() => {
     if (!activeVideo) return
 
+    closeButtonRef.current?.focus()
+
+    const dialogEl = closeButtonRef.current?.closest('[role="dialog"]')
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeDialog()
+      if (e.key === 'Escape') {
+        closeDialog()
+        return
+      }
+      if (e.key === 'Tab' && dialogEl) {
+        const focusable = dialogEl.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
 
     document.body.style.overflow = 'hidden'
@@ -91,9 +115,13 @@ export function VideoGallerySection() {
               <FadeIn key={item.id}>
                 <button
                   type="button"
-                  onClick={() => setActiveVideo(item)}
+                  ref={(el) => { if (activeVideo?.id === item.id) triggerRef.current = el }}
+                  onClick={() => {
+                    triggerRef.current = document.activeElement as HTMLButtonElement
+                    setActiveVideo(item)
+                  }}
                   aria-label={`Watch ${item.title} video`}
-                  className="relative w-full overflow-hidden rounded-2xl group shadow-md hover:shadow-2xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1 cursor-pointer"
+                  className="relative w-full overflow-hidden rounded-2xl group shadow-md hover:shadow-2xl focus-visible:shadow-2xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1 focus-visible:-translate-y-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   <video
                     muted
@@ -106,8 +134,8 @@ export function VideoGallerySection() {
                     <source src={getVideoUrl(item.id)} type="video/mp4" />
                   </video>
 
-                  {/* Play button on hover */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  {/* Play button on hover/focus */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg">
                       <Play className="h-7 w-7 text-primary ml-1" aria-hidden="true" />
                     </div>
@@ -144,6 +172,10 @@ export function VideoGallerySection() {
           <div
             className="absolute inset-0 bg-black/60"
             onClick={closeDialog}
+            role="button"
+            tabIndex={-1}
+            aria-label="Close video dialog"
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') closeDialog() }}
           />
 
           {/* Dialog Box */}
@@ -152,10 +184,11 @@ export function VideoGallerySection() {
             <div className="flex items-center justify-between px-5 py-3 border-b border-neutral-100">
               <span className="font-semibold text-primary text-sm">{activeVideo.title}</span>
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={closeDialog}
                 aria-label="Close video"
-                className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-neutral-100 transition-colors cursor-pointer"
+                className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-neutral-100 focus-visible:bg-neutral-100 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <X className="h-5 w-5 text-neutral-500" aria-hidden="true" />
               </button>

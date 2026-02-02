@@ -174,6 +174,7 @@ function Header() {
           <div className="hidden lg:flex items-center gap-x-4">
             <a
               href={`tel:${SITE_CONFIG.phone}`}
+              aria-label={`Call us at ${SITE_CONFIG.phone}`}
               className={clsx(
                 'flex items-center gap-2 text-sm font-semibold transition-colors duration-200',
                 isScrolled
@@ -277,6 +278,7 @@ function Header() {
                 <div className="mt-6 pt-6 border-t border-primary/10 space-y-4">
                   <a
                     href={`tel:${SITE_CONFIG.phone}`}
+                    aria-label={`Call us at ${SITE_CONFIG.phone}`}
                     className="flex items-center gap-3 px-4 py-3 text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors duration-200"
                   >
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -305,7 +307,7 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-60 focus:px-3 focus:py-1.5 focus:text-sm focus:bg-primary focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
       >
         Skip to main content
       </a>
