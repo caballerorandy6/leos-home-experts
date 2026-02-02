@@ -116,7 +116,7 @@ function Header() {
           {/* Logo */}
           <Link href="/" aria-label="Leo's Home Experts - Home" className="shrink-0">
             <Image
-              src="/brand/logo.avif"
+              src="/brand/logo-sm.avif"
               alt=""
               width={180}
               height={60}
