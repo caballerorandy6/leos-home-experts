@@ -329,7 +329,7 @@ Place in `<head>` or end of `<body>`:
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Leo's Home Experts",
-  "url": "https://leoshomeexperts.com",
+  "url": "https://www.ac-remodelingservice.com",
   "telephone": "+1-XXX-XXX-XXXX",
   "address": {
     "@type": "PostalAddress",

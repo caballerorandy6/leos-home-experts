@@ -12,7 +12,7 @@ export const genPageMetadata = ({
   title,
   description,
   pageRoute,
-  ogImg = "/og-image.png",
+  ogImg = "/brand/og-image.png",
 }: PageMetadata): Metadata => {
   const fullTitle = `${title} | ${SITE_CONFIG.name}`;
   const url = `${SITE_CONFIG.url}${pageRoute}`;

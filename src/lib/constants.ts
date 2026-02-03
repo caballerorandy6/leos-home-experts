@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   name: "Leo's Home Experts",
-  url: "https://leoshomeexperts.com",
+  url: "https://www.ac-remodelingservice.com",
   phone: "+1 (346) 219-9138",
   emails: [
     "lecour@ac-remodelingservice.com",
