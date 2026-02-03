@@ -21,28 +21,46 @@ export async function submitContactForm(
     return { success: false, error: 'Invalid form data' }
   }
 
-  const { name, email, phone, service, width, height, message } = result.data
+  const { name, email, phone, service, shadeCount, shades, message } = result.data
 
   const isPatio = service === 'patio-shades'
-  const measurementsHtml = isPatio
-    ? `
+
+  let measurementsHtml = ''
+  if (isPatio && shades && shades.length > 0) {
+    const shadesHtml = shades
+      .map((shade, index) => {
+        const widthDisplay = shade.width === 'unknown' ? 'Unknown' : `${shade.width} in`
+        const heightDisplay = shade.height === 'unknown' ? 'Unknown' : `${shade.height} in`
+        return `
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">
+              Shade ${index + 1}:
+            </td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+              ${widthDisplay} (W) × ${heightDisplay} (H)
+            </td>
+          </tr>
+        `
+      })
+      .join('')
+
+    measurementsHtml = `
       <tr>
-        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">Width:</td>
-        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${width === 'unknown' ? 'Unknown' : `${width} in`}</td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">
+          Number of Shades:
+        </td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${shadeCount}</td>
       </tr>
-      <tr>
-        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">Height:</td>
-        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${height === 'unknown' ? 'Unknown' : `${height} in`}</td>
-      </tr>
+      ${shadesHtml}
     `
-    : ''
+  }
 
   try {
     const { error } = await resend.emails.send({
       from: "Leo's Home Experts <no-reply@ac-remodelingservice.com>",
       to: [...SITE_CONFIG.emails],
       replyTo: email,
-      subject: `New Quote Request: ${service}`,
+      subject: `New Quote Request: ${service}${isPatio ? ` (${shadeCount} shade${shadeCount && shadeCount > 1 ? 's' : ''})` : ''}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #1e3a5f; padding: 20px; text-align: center;">

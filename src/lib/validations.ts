@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+const shadeMeasurementSchema = z.object({
+  width: z.string().min(1, "Please enter width or select Unknown"),
+  height: z.string().min(1, "Please enter height or select Unknown"),
+});
+
 export const contactFormSchema = z
   .object({
     name: z
@@ -16,30 +21,55 @@ export const contactFormSchema = z
         "Phone number can only contain digits, spaces, and dashes"
       ),
     service: z.string().min(1, "Please select a service"),
-    width: z.string().optional(),
-    height: z.string().optional(),
+    shadeCount: z.number().min(1).max(10).optional(),
+    shades: z.array(shadeMeasurementSchema).optional(),
     message: z
       .string()
       .min(10, "Message must be at least 10 characters")
       .max(1000, "Message must be less than 1000 characters"),
   })
-  .superRefine((data, ctx) => {
+  .check((ctx) => {
+    const data = ctx.value;
     if (data.service === "patio-shades") {
-      if (!data.width) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Please enter width or select Unknown",
-          path: ["width"],
+      if (!data.shadeCount || data.shadeCount < 1) {
+        ctx.issues.push({
+          code: "custom",
+          message: "Please select the number of shades",
+          path: ["shadeCount"],
+          input: data,
         });
       }
-      if (!data.height) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Please enter height or select Unknown",
-          path: ["height"],
+      if (!data.shades || data.shades.length === 0) {
+        ctx.issues.push({
+          code: "custom",
+          message: "Please enter measurements for at least one shade",
+          path: ["shades"],
+          input: data,
         });
+      }
+      if (data.shades && data.shadeCount) {
+        for (let i = 0; i < data.shadeCount; i++) {
+          const shade = data.shades[i];
+          if (!shade?.width) {
+            ctx.issues.push({
+              code: "custom",
+              message: "Please enter width or select Unknown",
+              path: ["shades", i, "width"],
+              input: data,
+            });
+          }
+          if (!shade?.height) {
+            ctx.issues.push({
+              code: "custom",
+              message: "Please enter height or select Unknown",
+              path: ["shades", i, "height"],
+              input: data,
+            });
+          }
+        }
       }
     }
   });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
+export type ShadeMeasurement = z.infer<typeof shadeMeasurementSchema>;

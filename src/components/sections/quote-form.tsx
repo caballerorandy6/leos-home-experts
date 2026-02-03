@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle, ArrowRight, Loader2, Send } from "lucide-react";
 import { contactFormSchema, type ContactFormData } from "@/lib/validations";
@@ -19,25 +19,51 @@ const inputError = "border-red-400 focus:border-red-500 focus:ring-red-200";
 
 const inputDisabled = "disabled:bg-neutral-100 disabled:text-neutral-400";
 
+const SHADE_COUNT_OPTIONS = Array.from({ length: 10 }, (_, i) => i + 1);
+
 export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [widthUnknown, setWidthUnknown] = useState(false);
-  const [heightUnknown, setHeightUnknown] = useState(false);
+  const [unknownFields, setUnknownFields] = useState<Record<string, boolean>>({});
 
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    control,
     formState: { errors },
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      shades: [],
+      shadeCount: undefined,
+    },
+  });
+
+  const { fields, replace } = useFieldArray({
+    control,
+    name: "shades",
   });
 
   const selectedService = watch("service");
+  const shadeCount = watch("shadeCount");
   const isHero = variant === "hero";
+
+  // Update shades array when shadeCount changes
+  useEffect(() => {
+    if (selectedService === "patio-shades" && shadeCount && shadeCount > 0) {
+      const currentShades = fields.length;
+      if (shadeCount !== currentShades) {
+        const newShades = Array.from({ length: shadeCount }, (_, i) => ({
+          width: fields[i]?.width || "",
+          height: fields[i]?.height || "",
+        }));
+        replace(newShades);
+      }
+    }
+  }, [shadeCount, selectedService, fields, replace]);
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -50,8 +76,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
       }
 
       setIsSubmitted(true);
-      setWidthUnknown(false);
-      setHeightUnknown(false);
+      setUnknownFields({});
       reset();
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch {
@@ -66,11 +91,15 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
   const handleServiceChange = (value: string) => {
     setValue("service", value);
     if (value !== "patio-shades") {
-      setValue("width", undefined);
-      setValue("height", undefined);
-      setWidthUnknown(false);
-      setHeightUnknown(false);
+      setValue("shadeCount", undefined);
+      setValue("shades", []);
+      setUnknownFields({});
     }
+  };
+
+  const handleUnknownToggle = (fieldKey: string, index: number, field: "width" | "height", checked: boolean) => {
+    setUnknownFields((prev) => ({ ...prev, [fieldKey]: checked }));
+    setValue(`shades.${index}.${field}`, checked ? "unknown" : "");
   };
 
   if (isSubmitted) {
@@ -228,89 +257,137 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
           )}
         </div>
 
-        {/* Patio Shades Measurements */}
+        {/* Patio Shades - Quantity Selection */}
         {selectedService === "patio-shades" && (
           <div className={`rounded-xl border border-secondary/30 bg-secondary/5 ${isHero ? "space-y-3 p-3" : "space-y-4 p-4"}`}>
-            <p className={`font-medium ${isHero ? "text-xs text-neutral-700" : "text-sm text-neutral-700"}`}>
-              Shade Measurements (inches)
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              {/* Width */}
-              <div className="space-y-1.5">
-                {!isHero && (
-                  <label htmlFor={`${variant}-width`} className="block text-sm font-medium text-neutral-700">
-                    Width (in)
-                  </label>
-                )}
-                <input
-                  type="number"
-                  id={isHero ? undefined : `${variant}-width`}
-                  inputMode="numeric"
-                  placeholder={isHero ? "Width (in)" : "e.g. 120"}
-                  aria-label={isHero ? "Width in inches" : undefined}
-                  disabled={widthUnknown}
-                  aria-invalid={errors.width ? "true" : undefined}
-                  aria-describedby={errors.width ? `${variant}-width-error` : undefined}
-                  {...register("width")}
-                  className={`${inputBase} ${inputDisabled} ${errors.width ? inputError : ""}`}
-                />
-                <label className="flex items-center gap-1.5 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={widthUnknown}
-                    onChange={(e) => {
-                      setWidthUnknown(e.target.checked);
-                      setValue("width", e.target.checked ? "unknown" : "");
-                    }}
-                    className="rounded border-neutral-300 text-primary focus:ring-primary"
-                  />
-                  <span className="text-xs text-neutral-500">Unknown</span>
-                </label>
-                {errors.width && (
-                  <p id={`${variant}-width-error`} className="text-xs text-red-500" role="alert">
-                    {errors.width.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Height */}
-              <div className="space-y-1.5">
-                {!isHero && (
-                  <label htmlFor={`${variant}-height`} className="block text-sm font-medium text-neutral-700">
-                    Height (in)
-                  </label>
-                )}
-                <input
-                  type="number"
-                  id={isHero ? undefined : `${variant}-height`}
-                  inputMode="numeric"
-                  placeholder={isHero ? "Height (in)" : "e.g. 96"}
-                  aria-label={isHero ? "Height in inches" : undefined}
-                  disabled={heightUnknown}
-                  aria-invalid={errors.height ? "true" : undefined}
-                  aria-describedby={errors.height ? `${variant}-height-error` : undefined}
-                  {...register("height")}
-                  className={`${inputBase} ${inputDisabled} ${errors.height ? inputError : ""}`}
-                />
-                <label className="flex items-center gap-1.5 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={heightUnknown}
-                    onChange={(e) => {
-                      setHeightUnknown(e.target.checked);
-                      setValue("height", e.target.checked ? "unknown" : "");
-                    }}
-                    className="rounded border-neutral-300 text-primary focus:ring-primary"
-                  />
-                  <span className="text-xs text-neutral-500">Unknown</span>
-                </label>
-                {errors.height && (
-                  <p id={`${variant}-height-error`} className="text-xs text-red-500" role="alert">
-                    {errors.height.message}
-                  </p>
-                )}
-              </div>
+            <div>
+              <label
+                htmlFor={`${variant}-shade-count`}
+                className={`block font-medium ${isHero ? "text-xs text-neutral-700 mb-1.5" : "text-sm text-neutral-700 mb-2"}`}
+              >
+                How many shades do you need?
+              </label>
+              <select
+                id={`${variant}-shade-count`}
+                aria-invalid={errors.shadeCount ? "true" : undefined}
+                aria-describedby={errors.shadeCount ? `${variant}-shade-count-error` : undefined}
+                {...register("shadeCount", { valueAsNumber: true })}
+                className={`${inputBase} text-neutral-600 ${errors.shadeCount ? inputError : ""}`}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select quantity
+                </option>
+                {SHADE_COUNT_OPTIONS.map((num) => (
+                  <option key={num} value={num}>
+                    {num} {num === 1 ? "shade" : "shades"}
+                  </option>
+                ))}
+              </select>
+              {errors.shadeCount && (
+                <p id={`${variant}-shade-count-error`} className="text-sm text-red-500 mt-1" role="alert">
+                  {errors.shadeCount.message}
+                </p>
+              )}
             </div>
+
+            {/* Dynamic Shade Measurements */}
+            {fields.length > 0 && (
+              <div className="space-y-4">
+                <p className={`font-medium ${isHero ? "text-xs text-neutral-700" : "text-sm text-neutral-700"}`}>
+                  Enter measurements for each shade (inches)
+                </p>
+
+                {fields.map((field, index) => {
+                  const widthKey = `shade-${index}-width`;
+                  const heightKey = `shade-${index}-height`;
+                  const shadeErrors = errors.shades?.[index];
+
+                  return (
+                    <fieldset
+                      key={field.id}
+                      className="rounded-lg border border-neutral-200 bg-white p-3"
+                    >
+                      <legend className="px-2 text-sm font-semibold text-primary">
+                        Shade {index + 1}
+                      </legend>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        {/* Width */}
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor={`${variant}-${widthKey}`}
+                            className="block text-xs font-medium text-neutral-600"
+                          >
+                            Width (in)
+                          </label>
+                          <input
+                            type="number"
+                            id={`${variant}-${widthKey}`}
+                            inputMode="numeric"
+                            placeholder="e.g. 120"
+                            disabled={unknownFields[widthKey]}
+                            aria-invalid={shadeErrors?.width ? "true" : undefined}
+                            aria-describedby={shadeErrors?.width ? `${variant}-${widthKey}-error` : undefined}
+                            {...register(`shades.${index}.width`)}
+                            className={`${inputBase} ${inputDisabled} text-sm py-2 ${shadeErrors?.width ? inputError : ""}`}
+                          />
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={unknownFields[widthKey] || false}
+                              onChange={(e) => handleUnknownToggle(widthKey, index, "width", e.target.checked)}
+                              className="rounded border-neutral-300 text-primary focus:ring-primary"
+                            />
+                            <span className="text-xs text-neutral-500">Unknown</span>
+                          </label>
+                          {shadeErrors?.width && (
+                            <p id={`${variant}-${widthKey}-error`} className="text-xs text-red-500" role="alert">
+                              {shadeErrors.width.message}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Height */}
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor={`${variant}-${heightKey}`}
+                            className="block text-xs font-medium text-neutral-600"
+                          >
+                            Height (in)
+                          </label>
+                          <input
+                            type="number"
+                            id={`${variant}-${heightKey}`}
+                            inputMode="numeric"
+                            placeholder="e.g. 96"
+                            disabled={unknownFields[heightKey]}
+                            aria-invalid={shadeErrors?.height ? "true" : undefined}
+                            aria-describedby={shadeErrors?.height ? `${variant}-${heightKey}-error` : undefined}
+                            {...register(`shades.${index}.height`)}
+                            className={`${inputBase} ${inputDisabled} text-sm py-2 ${shadeErrors?.height ? inputError : ""}`}
+                          />
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={unknownFields[heightKey] || false}
+                              onChange={(e) => handleUnknownToggle(heightKey, index, "height", e.target.checked)}
+                              className="rounded border-neutral-300 text-primary focus:ring-primary"
+                            />
+                            <span className="text-xs text-neutral-500">Unknown</span>
+                          </label>
+                          {shadeErrors?.height && (
+                            <p id={`${variant}-${heightKey}-error`} className="text-xs text-red-500" role="alert">
+                              {shadeErrors.height.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </fieldset>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
