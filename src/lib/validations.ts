@@ -14,12 +14,8 @@ export const contactFormSchema = z
     email: z.string().email("Please enter a valid email address"),
     phone: z
       .string()
-      .min(10, "Please enter a valid phone number")
-      .max(20, "Phone number is too long")
-      .regex(
-        /^[\d\s\-\(\)\+]+$/,
-        "Phone number can only contain digits, spaces, and dashes"
-      ),
+      .length(10, "Please enter a valid 10-digit phone number")
+      .regex(/^\d{10}$/, "Please enter only 10 digits"),
     service: z.string().min(1, "Please select a service"),
     shadeCount: z.number().min(1).max(10).optional(),
     shades: z.array(shadeMeasurementSchema).optional(),
