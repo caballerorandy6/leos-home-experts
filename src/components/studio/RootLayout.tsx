@@ -246,10 +246,10 @@ function Header() {
       <div
         id="mobile-menu"
         className={clsx(
-          'lg:hidden bg-white/95 backdrop-blur-md border-t border-primary/10 shadow-lg transition-all duration-200 ease-out',
+          'lg:hidden bg-white/95 backdrop-blur-md border-t border-primary/10 shadow-lg transition-all duration-200 ease-out overflow-hidden',
           isMobileMenuOpen
-            ? 'opacity-100 translate-y-0 visible'
-            : 'opacity-0 -translate-y-2 invisible'
+            ? 'max-h-screen opacity-100 visible'
+            : 'max-h-0 opacity-0 invisible'
         )}
         aria-hidden={!isMobileMenuOpen}
       >
