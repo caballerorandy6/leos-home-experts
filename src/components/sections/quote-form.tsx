@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, ArrowRight, Loader2, Send } from "lucide-react";
-import { contactFormSchema, type ContactFormData } from "@/lib/validations";
+import { CheckCircle, ArrowRight, Loader2, Send, Check, HelpCircle } from "lucide-react";
+import { contactFormSchema, type ContactFormData, SHADE_COLORS } from "@/lib/validations";
 import { submitContactForm } from "@/actions/contact";
 import { SITE_CONFIG, SERVICES } from "@/lib/constants";
 
@@ -39,6 +39,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
     defaultValues: {
       shades: [],
       shadeCount: undefined,
+      shadeColor: undefined,
     },
   });
 
@@ -48,6 +49,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
   });
 
   const selectedService = watch("service");
+  const shadeColor = watch("shadeColor");
   const shadeCount = watch("shadeCount");
   const isHero = variant === "hero";
 
@@ -91,6 +93,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
   const handleServiceChange = (value: string) => {
     setValue("service", value);
     if (value !== "patio-shades") {
+      setValue("shadeColor", undefined);
       setValue("shadeCount", undefined);
       setValue("shades", []);
       setUnknownFields({});
@@ -257,9 +260,92 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
           )}
         </div>
 
-        {/* Patio Shades - Quantity Selection */}
+        {/* Patio Shades - Color & Quantity Selection */}
         {selectedService === "patio-shades" && (
           <div className={`rounded-xl border border-secondary/30 bg-secondary/5 ${isHero ? "space-y-3 p-3" : "space-y-4 p-4"}`}>
+            {/* Color Selection */}
+            <div>
+              <label
+                className={`block font-medium ${isHero ? "text-xs text-neutral-700 mb-2" : "text-sm text-neutral-700 mb-2"}`}
+              >
+                Select shade color
+              </label>
+              <div
+                className="flex flex-wrap gap-3"
+                role="radiogroup"
+                aria-label="Shade color selection"
+              >
+                {SHADE_COLORS.map((color) => {
+                  const isSelected = shadeColor === color.id;
+                  const isNotSure = color.id === "not-sure";
+
+                  return (
+                    <button
+                      key={color.id}
+                      type="button"
+                      onClick={() => setValue("shadeColor", color.id)}
+                      className={`flex flex-col items-center gap-1.5 p-2 rounded-lg transition-all duration-200 ${
+                        isSelected
+                          ? "bg-primary/10 ring-2 ring-primary"
+                          : "hover:bg-neutral-100"
+                      }`}
+                      role="radio"
+                      aria-checked={isSelected}
+                      aria-label={color.label}
+                    >
+                      {isNotSure ? (
+                        <div
+                          className={`w-10 h-10 rounded-full flex items-center justify-center border-2 border-dashed transition-colors ${
+                            isSelected ? "border-primary bg-primary/10" : "border-neutral-300 bg-neutral-100"
+                          }`}
+                        >
+                          <HelpCircle
+                            className={`w-5 h-5 ${isSelected ? "text-primary" : "text-neutral-400"}`}
+                            aria-hidden="true"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-10 h-10 rounded-full relative transition-transform ${
+                            isSelected ? "scale-110" : ""
+                          }`}
+                          style={{
+                            backgroundColor: color.hex ?? undefined,
+                            boxShadow: color.id === "white" ? "inset 0 0 0 1px rgba(0,0,0,0.1)" : undefined,
+                          }}
+                        >
+                          {isSelected && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <Check
+                                className={`w-5 h-5 ${
+                                  color.id === "white" || color.id === "ivory" ? "text-primary" : "text-white"
+                                }`}
+                                strokeWidth={3}
+                                aria-hidden="true"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <span
+                        className={`text-xs font-medium ${
+                          isSelected ? "text-primary" : "text-neutral-600"
+                        }`}
+                      >
+                        {color.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              {errors.shadeColor && (
+                <p className="text-sm text-red-500 mt-2" role="alert">
+                  {errors.shadeColor.message}
+                </p>
+              )}
+            </div>
+
+            {/* Quantity Selection */}
             <div>
               <label
                 htmlFor={`${variant}-shade-count`}

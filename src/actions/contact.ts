@@ -1,7 +1,7 @@
 'use server'
 
 import { Resend } from 'resend'
-import { contactFormSchema, type ContactFormData } from '@/lib/validations'
+import { contactFormSchema, type ContactFormData, SHADE_COLORS } from '@/lib/validations'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const resend = process.env.RESEND_API_KEY
@@ -21,17 +21,48 @@ export async function submitContactForm(
     return { success: false, error: 'Invalid form data' }
   }
 
-  const { name, email, phone, service, shadeCount, shades, message } = result.data
+  const { name, email, phone, service, shadeColor, shadeCount, shades, message } = result.data
 
   const isPatio = service === 'patio-shades'
 
+  // Get color label for display
+  const colorLabel = shadeColor
+    ? SHADE_COLORS.find((c) => c.id === shadeColor)?.label ?? shadeColor
+    : null
+
   let measurementsHtml = ''
-  if (isPatio && shades && shades.length > 0) {
-    const shadesHtml = shades
-      .map((shade, index) => {
-        const widthDisplay = shade.width === 'unknown' ? 'Unknown' : `${shade.width} in`
-        const heightDisplay = shade.height === 'unknown' ? 'Unknown' : `${shade.height} in`
-        return `
+  if (isPatio) {
+    // Add color row
+    const colorHtml = colorLabel
+      ? `
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">
+          Color:
+        </td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${colorLabel}</td>
+      </tr>
+      `
+      : ''
+
+    // Add shade count row
+    const countHtml = shadeCount
+      ? `
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">
+          Number of Shades:
+        </td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${shadeCount}</td>
+      </tr>
+      `
+      : ''
+
+    // Add measurements rows
+    const shadesHtml = shades && shades.length > 0
+      ? shades
+          .map((shade, index) => {
+            const widthDisplay = shade.width === 'unknown' ? 'Unknown' : `${shade.width} in`
+            const heightDisplay = shade.height === 'unknown' ? 'Unknown' : `${shade.height} in`
+            return `
           <tr>
             <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">
               Shade ${index + 1}:
@@ -41,18 +72,11 @@ export async function submitContactForm(
             </td>
           </tr>
         `
-      })
-      .join('')
+          })
+          .join('')
+      : ''
 
-    measurementsHtml = `
-      <tr>
-        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #1e3a5f;">
-          Number of Shades:
-        </td>
-        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${shadeCount}</td>
-      </tr>
-      ${shadesHtml}
-    `
+    measurementsHtml = colorHtml + countHtml + shadesHtml
   }
 
   try {
@@ -60,7 +84,7 @@ export async function submitContactForm(
       from: "Leo's Home Experts <no-reply@ac-remodelingservice.com>",
       to: [...SITE_CONFIG.emails],
       replyTo: email,
-      subject: `New Quote Request: ${service}${isPatio ? ` (${shadeCount} shade${shadeCount && shadeCount > 1 ? 's' : ''})` : ''}`,
+      subject: `New Quote Request: ${service}${isPatio ? ` (${colorLabel}, ${shadeCount} shade${shadeCount && shadeCount > 1 ? 's' : ''})` : ''}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #1e3a5f; padding: 20px; text-align: center;">
