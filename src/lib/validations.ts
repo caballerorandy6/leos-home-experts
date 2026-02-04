@@ -36,50 +36,44 @@ export const contactFormSchema = z
       .min(10, "Message must be at least 10 characters")
       .max(1000, "Message must be less than 1000 characters"),
   })
-  .check((ctx) => {
-    const data = ctx.value;
+  .superRefine((data, ctx) => {
     if (data.service === "patio-shades") {
       if (!data.shadeColor) {
-        ctx.issues.push({
+        ctx.addIssue({
           code: "custom",
           message: "Please select a color",
           path: ["shadeColor"],
-          input: data,
         });
       }
       if (!data.shadeCount || data.shadeCount < 1) {
-        ctx.issues.push({
+        ctx.addIssue({
           code: "custom",
           message: "Please select the number of shades",
           path: ["shadeCount"],
-          input: data,
         });
       }
       if (!data.shades || data.shades.length === 0) {
-        ctx.issues.push({
+        ctx.addIssue({
           code: "custom",
           message: "Please enter measurements for at least one shade",
           path: ["shades"],
-          input: data,
         });
       }
       if (data.shades && data.shadeCount) {
         for (let i = 0; i < data.shadeCount; i++) {
           const shade = data.shades[i];
           if (!shade?.width) {
-            ctx.issues.push({
+            ctx.addIssue({
               code: "custom",
               message: "Please enter width or select Unknown",
               path: ["shades", i, "width"],
-              input: data,
             });
           }
           if (!shade?.height) {
-            ctx.issues.push({
+            ctx.addIssue({
               code: "custom",
               message: "Please enter height or select Unknown",
               path: ["shades", i, "height"],
-              input: data,
             });
           }
         }

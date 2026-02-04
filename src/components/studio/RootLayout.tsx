@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import clsx from 'clsx'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Phone, X, Menu } from 'lucide-react'
 
 import { Button } from '@/components/studio/Button'
@@ -26,7 +26,6 @@ function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
-  const shouldReduceMotion = useReducedMotion()
 
   // Track scroll position for header background only
   useEffect(() => {
@@ -120,6 +119,7 @@ function Header() {
               alt=""
               width={180}
               height={60}
+              sizes="(max-width: 640px) 144px, 168px"
               className={clsx(
                 'h-12 w-auto sm:h-14 transition-[filter] duration-300',
                 isScrolled ? 'brightness-100' : 'brightness-0 invert'
@@ -221,83 +221,82 @@ function Header() {
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              <motion.div
-                initial={false}
-                animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.2 }}
+              <div
+                className="transition-transform duration-200"
+                style={{ transform: isMobileMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" aria-hidden="true" />
                 ) : (
                   <Menu className="h-6 w-6" aria-hidden="true" />
                 )}
-              </motion.div>
+              </div>
             </button>
           </div>
         </nav>
       </Container>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="lg:hidden bg-white/95 backdrop-blur-md border-t border-primary/10 shadow-lg"
-          >
-            <Container>
-              <nav className="py-6" aria-label="Mobile navigation">
-                <ul className="space-y-1">
-                  {NAV_ITEMS.map((item) => {
-                    const isActive = activeSection === item.id
-                    return (
-                      <li key={item.href}>
-                        <a
-                          href={item.href}
-                          onClick={(e) => handleNavClick(e, item.href)}
-                          className={clsx(
-                            'flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl transition-colors duration-200',
-                            isActive
-                              ? 'text-primary bg-secondary/20'
-                              : 'text-primary/70 hover:text-primary hover:bg-primary/5'
-                          )}
-                          aria-current={isActive ? 'true' : undefined}
-                        >
-                          {item.label}
-                          {isActive && (
-                            <span className="w-2 h-2 rounded-full bg-secondary" aria-hidden="true" />
-                          )}
-                        </a>
-                      </li>
-                    )
-                  })}
-                </ul>
-                <div className="mt-6 pt-6 border-t border-primary/10 space-y-4">
-                  <a
-                    href={`tel:${SITE_CONFIG.phone}`}
-                    aria-label={`Call us at ${SITE_CONFIG.phone}`}
-                    className="flex items-center gap-3 px-4 py-3 text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors duration-200"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-primary/60 uppercase tracking-wider">Call Us</div>
-                      <div>{SITE_CONFIG.phone}</div>
-                    </div>
-                  </a>
-                  <Button href="#contact" variant="secondary" className="w-full justify-center py-3" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#contact')}>
-                    Get Free Quote
-                  </Button>
-                </div>
-              </nav>
-            </Container>
-          </motion.div>
+      <div
+        id="mobile-menu"
+        className={clsx(
+          'lg:hidden bg-white/95 backdrop-blur-md border-t border-primary/10 shadow-lg transition-all duration-200 ease-out',
+          isMobileMenuOpen
+            ? 'opacity-100 translate-y-0 visible'
+            : 'opacity-0 -translate-y-2 invisible'
         )}
-      </AnimatePresence>
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <Container>
+          <nav className="py-6" aria-label="Mobile navigation">
+            <ul className="space-y-1">
+              {NAV_ITEMS.map((item) => {
+                const isActive = activeSection === item.id
+                return (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href)}
+                      tabIndex={isMobileMenuOpen ? 0 : -1}
+                      className={clsx(
+                        'flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl transition-colors duration-200',
+                        isActive
+                          ? 'text-primary bg-secondary/20'
+                          : 'text-primary/70 hover:text-primary hover:bg-primary/5'
+                      )}
+                      aria-current={isActive ? 'true' : undefined}
+                    >
+                      {item.label}
+                      {isActive && (
+                        <span className="w-2 h-2 rounded-full bg-secondary" aria-hidden="true" />
+                      )}
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+            <div className="mt-6 pt-6 border-t border-primary/10 space-y-4">
+              <a
+                href={`tel:${SITE_CONFIG.phone}`}
+                aria-label={`Call us at ${SITE_CONFIG.phone}`}
+                tabIndex={isMobileMenuOpen ? 0 : -1}
+                className="flex items-center gap-3 px-4 py-3 text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors duration-200"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <div>
+                  <div className="text-xs text-primary/60 uppercase tracking-wider">Call Us</div>
+                  <div>{SITE_CONFIG.phone}</div>
+                </div>
+              </a>
+              <Button href="#contact" variant="secondary" className="w-full justify-center py-3" tabIndex={isMobileMenuOpen ? 0 : -1} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(e, '#contact')}>
+                Get Free Quote
+              </Button>
+            </div>
+          </nav>
+        </Container>
+      </div>
     </header>
   )
 }
