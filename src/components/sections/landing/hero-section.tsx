@@ -40,6 +40,8 @@ export function HeroSection() {
             muted
             loop
             playsInline
+            preload="none"
+            poster="/carousel/patio-build-remodeling-1.avif"
             onCanPlay={() => setVideoReady(true)}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
           >

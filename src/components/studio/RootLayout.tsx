@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Phone, X, Menu } from 'lucide-react'
@@ -114,18 +113,25 @@ function Header() {
         <nav className="flex items-center justify-between h-20" aria-label="Main navigation">
           {/* Logo */}
           <Link href="/" aria-label="Leo's Home Experts - Home" className="shrink-0">
-            <Image
-              src="/brand/logo-sm.avif"
-              alt=""
-              width={180}
-              height={60}
-              sizes="(max-width: 640px) 144px, 168px"
-              className={clsx(
-                'h-12 w-auto sm:h-14 transition-[filter] duration-300',
-                isScrolled ? 'brightness-100' : 'brightness-0 invert'
-              )}
-              priority
-            />
+            <picture>
+              <source
+                media="(max-width: 640px)"
+                srcSet="/brand/logo-mobile.avif"
+                width={144}
+                height={48}
+              />
+              <img
+                src="/brand/logo-sm.avif"
+                alt=""
+                width={168}
+                height={56}
+                className={clsx(
+                  'h-12 w-auto sm:h-14 transition-[filter] duration-300',
+                  isScrolled ? 'brightness-100' : 'brightness-0 invert'
+                )}
+                fetchPriority="high"
+              />
+            </picture>
           </Link>
 
           {/* Desktop Navigation */}
