@@ -45,7 +45,7 @@ export function Hero() {
         )}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/70 to-primary/60" />
+        <div className="absolute inset-0 bg-linear-to-r from-primary/85 via-primary/70 to-primary/60" />
       </div>
 
       {/* Content */}
@@ -65,7 +65,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl">
-            Expert patio construction, remodeling, shades, and awnings.
+            Expert patio construction, remodeling, motorized screens, and awnings.
             Quality craftsmanship you can trust for your Houston home.
           </p>
 

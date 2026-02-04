@@ -1,14 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/lib/constants";
 
+const geist = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_CONFIG.name} | Patio Build, Shades & Awnings Houston TX`,
+    default: `${SITE_CONFIG.name} | Patio Build, Motorized Screens & Awnings Houston TX`,
     template: `%s | ${SITE_CONFIG.name}`,
   },
   description:
-    "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX. Licensed, insured, and trusted by homeowners. Get a free quote today!",
+    "Expert patio construction, remodeling, motorized screens, and awning installation in Houston, TX. Licensed, insured, and trusted by homeowners. Get a free quote today!",
   metadataBase: new URL(SITE_CONFIG.url),
   alternates: {
     canonical: "/",
@@ -23,7 +30,7 @@ export const metadata: Metadata = {
   keywords: [
     "patio build Houston TX",
     "patio remodeling Houston TX",
-    "patio shades Houston",
+    "motorized screens Houston",
     "awnings Houston Texas",
     "awning installation Houston",
     "outdoor living spaces Houston",
@@ -43,23 +50,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
-    title: `${SITE_CONFIG.name} | Patio Build, Shades & Awnings Houston TX`,
+    title: `${SITE_CONFIG.name} | Patio Build, Motorized Screens & Awnings Houston TX`,
     description:
-      "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX. Get a free quote today!",
+      "Expert patio construction, remodeling, motorized screens, and awning installation in Houston, TX. Get a free quote today!",
     images: [
       {
         url: "/brand/og-image.png",
         width: 1200,
         height: 630,
-        alt: `${SITE_CONFIG.name} - Expert patio construction, shades, and awnings in Houston TX`,
+        alt: `${SITE_CONFIG.name} - Expert patio construction, motorized screens, and awnings in Houston TX`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_CONFIG.name} | Patio Build, Shades & Awnings Houston TX`,
+    title: `${SITE_CONFIG.name} | Patio Build, Motorized Screens & Awnings Houston TX`,
     description:
-      "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX.",
+      "Expert patio construction, remodeling, motorized screens, and awning installation in Houston, TX.",
     images: ["/brand/og-image.png"],
   },
   robots: {
@@ -85,17 +92,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full bg-primary text-base antialiased scroll-smooth">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/Mona-Sans.var.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body className="flex min-h-full flex-col">
+    <html lang="en" className={`${geist.variable} h-full bg-primary text-base antialiased scroll-smooth`}>
+      <body className="flex min-h-full flex-col font-sans">
         {children}
       </body>
     </html>

@@ -9,7 +9,7 @@ import { SERVICES } from '@/lib/constants'
 
 const serviceIcons: Record<string, React.ElementType> = {
   'patio-build-remodeling': Hammer,
-  'patio-shades': Sun,
+  'motorized-screens': Sun,
   'awnings': Umbrella,
 }
 
@@ -19,10 +19,10 @@ const SERVICE_VIDEOS: Record<string, { id: string; title: string }[]> = {
     { id: 'patio-build-remodeling-2', title: 'Patio Renovation' },
     { id: 'patio-build-remodeling-3', title: 'Patio Remodeling' },
   ],
-  'patio-shades': [
-    { id: 'patio-shades-1', title: 'Patio Shades' },
-    { id: 'patio-shades-2', title: 'Custom Shades' },
-    { id: 'patio-shades-3', title: 'Shade Installation' },
+  'motorized-screens': [
+    { id: 'patio-shades-1', title: 'Motorized Screens' },
+    { id: 'patio-shades-2', title: 'Custom Screens' },
+    { id: 'patio-shades-3', title: 'Screen Installation' },
   ],
   'awnings': [
     { id: 'awning-1', title: 'Awning Installation' },
@@ -231,7 +231,7 @@ export function ServicesSection() {
           title="Expert Patio & Outdoor Solutions"
         >
           <p>
-            From custom patio builds to professional shade and awning installations,
+            From custom patio builds to professional motorized screen and awning installations,
             we provide quality outdoor living solutions tailored to your needs.
           </p>
         </SectionIntro>

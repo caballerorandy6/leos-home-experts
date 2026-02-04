@@ -7,7 +7,7 @@ export function LocalBusinessJsonLd() {
     "@id": `${SITE_CONFIG.url}/#localbusiness`,
     name: SITE_CONFIG.name,
     description:
-      "Expert patio construction, remodeling, patio shades, and awning installation in Houston, TX. Licensed, insured, and trusted by homeowners.",
+      "Expert patio construction, remodeling, motorized screens, and awning installation in Houston, TX. Licensed, insured, and trusted by homeowners.",
     url: SITE_CONFIG.url,
     telephone: SITE_CONFIG.phone,
     email: SITE_CONFIG.emails[0],

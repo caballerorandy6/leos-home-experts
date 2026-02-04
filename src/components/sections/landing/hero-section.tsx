@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Phone, CheckCircle, ArrowRight } from 'lucide-react'
+import { Phone, CheckCircle, ArrowRight, Shield } from 'lucide-react'
 import { Container } from '@/components/studio/Container'
 import { FadeIn } from '@/components/studio/FadeIn'
 import { QuoteForm } from '@/components/sections/quote-form'
@@ -75,7 +75,7 @@ export function HeroSection() {
               className="mt-6 text-lg sm:text-xl text-white max-w-xl leading-relaxed"
               style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}
             >
-              Expert patio construction, remodeling, custom shades,
+              Expert patio construction, remodeling, motorized screens,
               and awnings. Quality craftsmanship and honest pricing.
             </p>
 
@@ -93,6 +93,32 @@ export function HeroSection() {
                   <div className="text-sm text-white/90" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>{stat.label}</div>
                 </div>
               ))}
+            </div>
+
+            {/* Warranty Badge */}
+            <div className="mt-8 p-4 bg-secondary/20 backdrop-blur-md rounded-2xl border border-secondary/40">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center justify-center w-10 h-10 bg-secondary rounded-full">
+                  <Shield className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <span className="text-white font-semibold text-lg" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
+                  Industry-Leading Warranty
+                </span>
+              </div>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div className="bg-white/10 rounded-xl py-2 px-1">
+                  <div className="text-secondary font-bold text-lg sm:text-xl">5 Years</div>
+                  <div className="text-white/80 text-xs sm:text-sm">Motor & Fabric</div>
+                </div>
+                <div className="bg-white/10 rounded-xl py-2 px-1">
+                  <div className="text-secondary font-bold text-lg sm:text-xl">Lifetime</div>
+                  <div className="text-white/80 text-xs sm:text-sm">Frame</div>
+                </div>
+                <div className="bg-white/10 rounded-xl py-2 px-1">
+                  <div className="text-secondary font-bold text-lg sm:text-xl">1 Year</div>
+                  <div className="text-white/80 text-xs sm:text-sm">Labor</div>
+                </div>
+              </div>
             </div>
 
             {/* CTA Buttons - Mobile */}

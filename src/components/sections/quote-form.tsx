@@ -55,7 +55,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
 
   // Update shades array when shadeCount changes
   useEffect(() => {
-    if (selectedService === "patio-shades" && shadeCount && shadeCount > 0) {
+    if (selectedService === "motorized-screens" && shadeCount && shadeCount > 0) {
       const currentShades = fields.length;
       if (shadeCount !== currentShades) {
         const newShades = Array.from({ length: shadeCount }, (_, i) => ({
@@ -92,7 +92,7 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
 
   const handleServiceChange = (value: string) => {
     setValue("service", value);
-    if (value !== "patio-shades") {
+    if (value !== "motorized-screens") {
       setValue("shadeColor", undefined);
       setValue("shadeCount", undefined);
       setValue("shades", []);
@@ -260,8 +260,8 @@ export function QuoteForm({ variant = "contact" }: QuoteFormProps) {
           )}
         </div>
 
-        {/* Patio Shades - Color & Quantity Selection */}
-        {selectedService === "patio-shades" && (
+        {/* Motorized Screens - Color & Quantity Selection */}
+        {selectedService === "motorized-screens" && (
           <div className={`rounded-xl border border-secondary/30 bg-secondary/5 ${isHero ? "space-y-3 p-3" : "space-y-4 p-4"}`}>
             {/* Color Selection */}
             <div>

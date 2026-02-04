@@ -31,19 +31,19 @@ const GALLERY_IMAGES = [
     title: 'Patio Construction',
   },
   {
-    src: '/carousel/patio-shades-1.avif',
-    alt: 'Custom patio shades installation in Houston',
-    title: 'Patio Shades',
+    src: '/carousel/motorized-screens-1.avif',
+    alt: 'Custom motorized screens installation in Houston',
+    title: 'Motorized Screens',
   },
   {
-    src: '/carousel/patio-shades-2.avif',
-    alt: 'Premium shade solutions for outdoor spaces',
-    title: 'Custom Shades',
+    src: '/carousel/motorized-screens-2.avif',
+    alt: 'Premium motorized screen solutions for outdoor spaces',
+    title: 'Custom Screens',
   },
   {
-    src: '/carousel/patio-shades-3.avif',
-    alt: 'Professional patio shade project',
-    title: 'Shade Installation',
+    src: '/carousel/motorized-screens-3.avif',
+    alt: 'Professional motorized screen project',
+    title: 'Screen Installation',
   },
   {
     src: '/carousel/awning-1.avif',

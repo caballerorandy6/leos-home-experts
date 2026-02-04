@@ -37,7 +37,7 @@ export const contactFormSchema = z
       .max(1000, "Message must be less than 1000 characters"),
   })
   .superRefine((data, ctx) => {
-    if (data.service === "patio-shades") {
+    if (data.service === "motorized-screens") {
       if (!data.shadeColor) {
         ctx.addIssue({
           code: "custom",

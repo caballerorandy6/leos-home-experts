@@ -23,7 +23,7 @@ export async function submitContactForm(
 
   const { name, email, phone, service, shadeColor, shadeCount, shades, message } = result.data
 
-  const isPatio = service === 'patio-shades'
+  const isMotorizedScreens = service === 'motorized-screens'
 
   // Get color label for display
   const colorLabel = shadeColor
@@ -31,7 +31,7 @@ export async function submitContactForm(
     : null
 
   let measurementsHtml = ''
-  if (isPatio) {
+  if (isMotorizedScreens) {
     // Add color row
     const colorHtml = colorLabel
       ? `
@@ -84,7 +84,7 @@ export async function submitContactForm(
       from: "Leo's Home Experts <no-reply@ac-remodelingservice.com>",
       to: [...SITE_CONFIG.emails],
       replyTo: email,
-      subject: `New Quote Request: ${service}${isPatio ? ` (${colorLabel}, ${shadeCount} shade${shadeCount && shadeCount > 1 ? 's' : ''})` : ''}`,
+      subject: `New Quote Request: ${service}${isMotorizedScreens ? ` (${colorLabel}, ${shadeCount} shade${shadeCount && shadeCount > 1 ? 's' : ''})` : ''}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #1e3a5f; padding: 20px; text-align: center;">

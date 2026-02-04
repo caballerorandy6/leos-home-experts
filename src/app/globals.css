@@ -1,15 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@font-face {
-  font-family: 'Mona Sans';
-  font-weight: 200 900;
-  font-display: swap;
-  font-style: normal;
-  font-stretch: 75% 125%;
-  src: url('/fonts/Mona-Sans.var.woff2') format('woff2');
-}
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -40,14 +31,12 @@
 
   /* Fonts */
   --font-sans:
-    Mona Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    var(--font-geist), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono: var(--font-geist-mono);
+  --font-mono: ui-monospace, monospace;
   --font-display:
-    Mona Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    var(--font-geist), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-display--font-variation-settings: 'wdth' 125;
-  --font-display-length: 2;
 
   /* shadcn color mappings */
   --color-background: var(--background);

@@ -28,10 +28,10 @@ export const SERVICES = [
     serviceArea: "Houston Area",
   },
   {
-    id: "patio-shades",
-    title: "Patio Shades",
+    id: "motorized-screens",
+    title: "Motorized Screens",
     description:
-      "Keep cool and comfortable with our premium patio shade solutions. Custom measurements and professional installation for lasting results.",
+      "Keep cool and comfortable with our premium motorized screen solutions. Custom measurements and professional installation for lasting results.",
     icon: "Sun",
     serviceArea: "Houston Area",
   },
@@ -88,7 +88,7 @@ export const TESTIMONIALS = [
     name: "Sarah Johnson",
     location: "Sugar Land, TX",
     rating: 5,
-    text: "Our patio shades turned out beautiful. The attention to detail and craftsmanship is outstanding. Highly recommend!",
+    text: "Our motorized screens turned out beautiful. The attention to detail and craftsmanship is outstanding. Highly recommend!",
   },
 ] as const;
 
