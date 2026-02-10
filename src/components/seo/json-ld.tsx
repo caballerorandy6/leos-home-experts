@@ -50,7 +50,7 @@ export function LocalBusinessJsonLd() {
         closes: "14:00",
       },
     ],
-    sameAs: [SITE_CONFIG.social.tiktok],
+    sameAs: [SITE_CONFIG.social.tiktok, SITE_CONFIG.social.instagram],
   };
 
   return (

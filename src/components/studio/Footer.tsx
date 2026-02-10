@@ -22,6 +22,7 @@ const navigation = [
     title: 'Connect',
     links: [
       { title: 'TikTok', href: SITE_CONFIG.social.tiktok },
+      { title: 'Instagram', href: SITE_CONFIG.social.instagram },
     ],
   },
 ]

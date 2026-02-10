@@ -15,6 +15,7 @@ export const SITE_CONFIG = {
   },
   social: {
     tiktok: "https://tiktok.com/@leoshomeexpert",
+    instagram: "https://www.instagram.com/leleac1987",
   },
 } as const;
 

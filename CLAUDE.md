@@ -5,6 +5,7 @@
 - **Business:** Leo's Home Experts - Home services company
 - **Competitor:** shadedocs.com
 - **TikTok:** tiktok.com/@leoshomeexpert
+- **Instagram:** instagram.com/leleac1987
 - **Type:** Landing page optimized for conversions and local SEO
 
 ---
