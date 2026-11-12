@@ -1,122 +1,77 @@
 # Leo's Home Experts
 
-Landing page for Leo's Home Experts, a home services company specializing in patio construction, motorized screens, and awnings in Houston, TX.
+**Landing page for a home services company in Houston, TX** — patio construction and remodeling, motorized screens and awnings, with a quote request form, video gallery and local SEO.
 
-## Tech Stack
+**Live:** [leos-home-experts.vercel.app](https://leos-home-experts.vercel.app)
 
-- **Framework:** Next.js 16 (App Router)
-- **UI:** React 19, TailwindCSS 4, shadcn/ui
-- **Forms:** React Hook Form + Zod validation
-- **Email:** Resend
-- **Videos:** Cloudinary
-- **Fonts:** Geist (via next/font/google)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61dafb?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38b2ac?logo=tailwindcss)
 
-## Getting Started
+## What it does
 
-### Prerequisites
+- **One-page landing** with hero, services, why choose us, photo gallery, video gallery, testimonials, service areas and contact.
+- **Services:** patio build and remodeling, motorized screens and awnings, each with its own video (hosted on Cloudinary).
+- **Quote request form:** validated with React Hook Form and Zod and sent by a Server Action with Resend. For motorized screens it also asks for color and number of shades, and the email subject includes them.
+- **Conversion:** click-to-call in the header, hero, footer and a floating call button.
+- **Local SEO:** metadata, JSON-LD (HomeAndConstructionBusiness, Service, opening hours, service areas), sitemap and robots.
+- **Performance:** mobile-first layout, dynamic imports and optimized images (`scripts/optimize-images.mjs`).
 
-- Node.js 18+
-- npm or pnpm
-- Resend API key
+## Tech stack
 
-### Installation
+| Area | Tools |
+|---|---|
+| Framework | Next.js 16 (App Router, Server Actions), React 19, TypeScript |
+| UI | Tailwind CSS 4, shadcn/ui (Radix), Framer Motion, Embla Carousel, lucide-react |
+| Forms | React Hook Form, Zod |
+| Email | Resend |
+| Media | Cloudinary (videos), Sharp (images) |
+| Hosting | Vercel |
 
-```bash
-# Clone the repository
-git clone https://github.com/caballerorandy6/leos-home-experts.git
-
-# Install dependencies
-npm install
-
-# Copy environment variables
-cp .env.example .env.local
-
-# Add your Resend API key to .env.local
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the site.
-
-### Build
-
-```bash
-npm run build
-npm start
-```
-
-## Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `RESEND_API_KEY` | API key from [Resend](https://resend.com/api-keys) | Yes |
-
-## Project Structure
+## Project structure
 
 ```
 src/
-├── app/
-│   ├── layout.tsx        # Root layout with metadata
-│   ├── page.tsx          # Homepage
-│   ├── globals.css       # Global styles and theme
-│   ├── robots.ts         # SEO robots.txt
-│   └── sitemap.ts        # SEO sitemap
-├── actions/
-│   └── contact.ts        # Server action for contact form
-├── components/
-│   ├── layout/           # Header, Footer
-│   ├── sections/
-│   │   ├── landing/      # Page sections (Hero, Services, etc.)
-│   │   ├── contact-form.tsx
-│   │   └── quote-form.tsx
-│   ├── seo/              # JSON-LD structured data
-│   ├── studio/           # Reusable UI components
-│   └── ui/               # shadcn/ui components
-└── lib/
-    ├── constants.ts      # Site config, services, testimonials
-    ├── utils.ts          # Utility functions
-    └── validations.ts    # Zod schemas
+  app/              layout, home page, robots and sitemap
+  actions/          contact / quote Server Action
+  components/
+    layout/         header and footer
+    sections/       landing sections, contact and quote forms
+    seo/            JSON-LD structured data
+    ui/             shadcn/ui components
+  lib/              site config, services, testimonials, Zod schemas
+scripts/            image optimization
 ```
 
-## External Services
+## Getting started
 
-### Resend (Email)
-- Used for contact form submissions
-- Emails sent to configured recipients in `src/lib/constants.ts`
-
-### Cloudinary (Videos)
-- Service videos hosted at: `res.cloudinary.com/caballerorandy/video/upload/`
-- Video IDs configured in `src/components/sections/landing/services-section.tsx`
-
-## Deployment
-
-Deploy to Vercel:
+**Requirements:** Node.js 20.9+ and a Resend API key.
 
 ```bash
-npm run build
+git clone https://github.com/caballerorandy6/leos-home-experts.git
+cd leos-home-experts
+npm install
+echo "RESEND_API_KEY=your_key" > .env.local
+npm run dev      # http://localhost:3000
 ```
 
-Or connect the GitHub repository to [Vercel](https://vercel.com) for automatic deployments.
+### Environment variables
 
-### Environment Variables on Vercel
+| Variable | Purpose |
+|---|---|
+| `RESEND_API_KEY` | Sends quote request emails (recipients are set in `src/lib/constants.ts`) |
 
-Add `RESEND_API_KEY` in Project Settings > Environment Variables.
+## Scripts
 
-## Features
+| Command | What it does |
+|---|---|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Run the production build |
+| `npm run lint` | ESLint |
 
-- Responsive design (mobile-first)
-- SEO optimized (meta tags, JSON-LD, sitemap, robots.txt)
-- Contact form with validation and email notifications
-- Video gallery with Cloudinary integration
-- Accessibility compliant
-- Performance optimized (dynamic imports, image optimization)
+## Author
 
-## Contact
-
-- **Website:** [ac-remodelingservice.com](https://www.ac-remodelingservice.com)
-- **Phone:** +1 (346) 219-9138
-- **TikTok:** [@leoshomeexpert](https://tiktok.com/@leoshomeexpert)
+**Randy Caballero** — Full-Stack Developer, Houston, TX
+[rcweb.dev](https://rcweb.dev) · [LinkedIn](https://linkedin.com/in/caballerorandy) · [GitHub](https://github.com/caballerorandy6)
